@@ -1,0 +1,5 @@
+* Hacer que el api devuelva el usuario en el endpoint logInByToken
+
+
+
+reload reactotron: adb reverse tcp:9090 tcp:9090
