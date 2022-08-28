@@ -1,4 +1,4 @@
-// import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import React from "react";
 import { useForm } from "react-hook-form";
@@ -25,11 +25,11 @@ export default function useHaircut() {
     },
   });
   const [visibleModalEdit, setVisibleModalEdit] = React.useState(true);
-  const response = useQuery(HAIRCUTS_QUERY, {
-    variables: {},
-    client: apolloClient,
-  });
-  console.log({ response });
+  // const response = useQuery(HAIRCUTS_QUERY, {
+  //   variables: {},
+  //   client: apolloClient,
+  // });
+  // console.log({ response });
 
   return {
     methods,
