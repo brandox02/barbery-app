@@ -43,7 +43,6 @@ export default function useSignIn({ setToken }) {
 
       const response = await signInMutation({ variables: { user: payload } });
       const token = response.data.signIn.token;
-      console.log("in payload", token);
 
       await setToken(token);
     })

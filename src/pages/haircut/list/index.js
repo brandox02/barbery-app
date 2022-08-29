@@ -9,19 +9,12 @@ import {
   View,
 } from "react-native";
 import Card from "./card";
-import HeaderPage from "../../components/HeaderPage";
-import EditModal from "./EditModal";
+import HeaderPage from "../../../components/HeaderPage";
 import useHaircut from "./useHaircut";
+import Spinner from "../../../components/Spinner";
 
 export default function Haircut() {
-  const {
-    methods,
-    setVisibleModalEdit,
-    visibleModalEdit,
-    haircuts,
-    loadingHaircuts,
-    goBack,
-  } = useHaircut();
+  const { haircuts, goToCreate, goToUpdate, loading } = useHaircut();
 
   // if (loadingHaircuts) {
   //   return <Text>App loading...</Text>;
@@ -31,12 +24,7 @@ export default function Haircut() {
 
   return (
     <View style={{}}>
-      <EditModal
-        setVisibleModalEdit={setVisibleModalEdit}
-        visibleModalEdit={visibleModalEdit}
-        control={methods.control}
-        methods={methods}
-      />
+      <Spinner visible={loading} />
       <View
         style={{
           flexDirection: "column",
@@ -47,18 +35,18 @@ export default function Haircut() {
       >
         <HeaderPage text="Cortes de pelo" />
         <View style={{ alignItems: "flex-end", paddingRight: 10 }}>
-          <Button title="Nuevo Corte" />
+          <Button title="Nuevo Corte" onPress={goToCreate} />
         </View>
       </View>
       <ScrollView style={{ height: "100%" }}>
-        {haircuts?.map(({ image, name, price, duration }) => (
+        {haircuts?.map(({ image, name, price, duration, id }) => (
           <Card
-            key={Math.random()}
+            key={id}
             duration={duration}
-            img={require("../../../assets/haircut-1.webp")}
+            image={image}
             price={price}
             title={name}
-            onEdit={() => setVisibleModalEdit(true)}
+            onEdit={() => goToUpdate(id)}
             onDelete={() => {}}
           />
         ))}

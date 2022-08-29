@@ -1,9 +1,10 @@
+import dayjs from "dayjs";
 import React from "react";
-import { Image, StyleSheet, Text, View, Modal } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 import NumberFormat from "react-number-format";
 import CardMenu from "./Menu";
 export default function Card({
-  img,
+  image,
   title,
   price,
   duration,
@@ -14,7 +15,6 @@ export default function Card({
     <View style={styles.container}>
       <View
         style={{
-          // borderWidth: 1,
           justifyContent: "space-between",
           alignItems: "center",
           flexDirection: "row",
@@ -25,7 +25,14 @@ export default function Card({
       </View>
 
       <View style={styles.card}>
-        <Image source={img} style={styles.image} />
+        <Image
+          source={
+            image
+              ? { uri: image }
+              : require("../../../../../assets/haircut-1.webp")
+          }
+          style={styles.image}
+        />
         <View
           style={{
             marginTop: 10,
@@ -34,27 +41,13 @@ export default function Card({
             width: "100%",
           }}
         >
-          {/* <View
-            style={{
-              flexDirection: "row",
-              // alignItems: "flex-start",
-
-              borderWidth: 1,
-            }}
-          >
-            <Image
-              source={require("../../../../assets/price-icon.png")}
-              style={{ width: 50, height: 50 }}
-            />
-            <Text style={styles.title}>{title}</Text>
-          </View> */}
           <View
             style={{
               flexDirection: "row",
             }}
           >
             <Image
-              source={require("../../../../assets/price-icon.png")}
+              source={require("../../../../../assets/price-icon.png")}
               style={{ width: 50, height: 50 }}
             />
             <NumberFormat
@@ -72,11 +65,12 @@ export default function Card({
             }}
           >
             <Image
-              source={require("../../../../assets/duration-icon.jpg")}
+              source={require("../../../../../assets/duration-icon.jpg")}
               style={{ width: 35, height: 35, marginLeft: 4 }}
             />
-
-            <Text style={styles.duration}>{duration}</Text>
+            <Text style={styles.duration}>
+              {dayjs(`2001-01-01 ${duration}`).format("HH:mm")}
+            </Text>
           </View>
         </View>
       </View>

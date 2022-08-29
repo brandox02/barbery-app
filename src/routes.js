@@ -1,26 +1,13 @@
-import SignIn from "./pages/signin";
-import LogIn from "./pages/login";
-import HaircutList from "./pages/haircuts";
+import haircutRoutes from "./pages/haircut/routes";
 import React from "react";
 import { Text } from "react-native";
+import signInRoutes from "./pages/signin/routes";
+import loginInRoutes from "./pages/login/routes";
 
 export default ({ setToken }) => [
-  {
-    path: "/signIn",
-    exact: true,
-    element: <SignIn setToken={setToken} />,
-  },
-  {
-    path: "/",
-    exact: true,
-    element: <LogIn setToken={setToken} />,
-  },
-
-  {
-    path: "/haircuts",
-    exact: true,
-    element: <HaircutList />,
-  },
+  ...loginInRoutes({ setToken }),
+  ...signInRoutes({ setToken }),
+  ...haircutRoutes,
   {
     path: "/schedules",
     exact: true,

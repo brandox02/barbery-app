@@ -42,6 +42,7 @@ const menuItems = [
 
 export const Layout = ({ children, hideMenu }) => {
   const navigate = useNavigate();
+
   return (
     <View style={styles.container}>
       <ScrollView style={styles.contentContainer}>{children}</ScrollView>

@@ -2,8 +2,14 @@ import * as ImagePickerFromExpo from "expo-image-picker";
 import { useEffect, useState } from "react";
 import { Button, Image, View } from "react-native";
 
-export default function ImagePicker({ updateImage }) {
+export default function ImagePicker({ updateImage, initialImage }) {
   const [image, setImage] = useState(null);
+
+  useEffect(() => {
+    if (initialImage) {
+      setImage(initialImage);
+    }
+  }, [initialImage]);
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -16,7 +22,7 @@ export default function ImagePicker({ updateImage }) {
     });
 
     if (!result.cancelled) {
-      setImage(result.uri);
+      setImage(`data:image/jpg;base64,${result.base64}`);
     }
   };
 
