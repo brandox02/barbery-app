@@ -31,6 +31,7 @@ export function usePopulate({
             "Ha ocurrido un error, intentalo de nuevo mas tarde"
           );
           navigate(-1);
+          console.error(err);
         });
     }
   }, [loading, data]);

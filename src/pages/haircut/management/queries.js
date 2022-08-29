@@ -18,7 +18,7 @@ export const GET_HAIRCUT = gql`
       id
       name
       duration
-      image
+      # image
       price
     }
   }

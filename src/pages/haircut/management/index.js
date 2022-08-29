@@ -14,8 +14,9 @@ import Spinner from "../../../components/Spinner";
 import { Layout } from "../../../layout";
 import ImagePicker from "./ImagePicker";
 import useManagement from "./useManagement";
-import DatePicker from "react-native-modern-datepicker";
 import { Divider } from "react-native-paper";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import dayjs from "dayjs";
 
 export default function HaircutManagement() {
   const { handleSubmit, imageError, methods, haircutId, goToBack, isLoading } =
@@ -140,20 +141,14 @@ export default function HaircutManagement() {
         >
           {"Duración"}
         </Text>
-        <DatePicker
-          style={{
-            width: "100%",
-            borderRadius: 10,
-            // height: 100,
-            borderWidth: 0.3,
-            borderColor: "grey",
-            marginBottom: 20,
-          }}
-          // mode="time"
-          onTimeChange={(time) => console.log(time)} //methods.setValue("duration", time)
-          onDateChange={(date) => console.log(date)}
-          current={new Date().toISOString()}
-          selected={new Date().toISOString()}
+        <DateTimePicker
+          style={{ borderWidth: 0.3, borderColor: "grey" }}
+          is24Hour
+          value={new Date(methods.watch("duration"))}
+          onChange={(e) =>
+            methods.setValue("duration", e.nativeEvent.timestamp)
+          }
+          mode={"countdown"}
         />
       </View>
     </Layout>

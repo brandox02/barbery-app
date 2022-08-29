@@ -38,6 +38,11 @@ export default function useManagement() {
         "price",
       ]);
       payload.price = payload.price.toString();
+      console.log(payload.duration);
+      const str = ```2001-01-01 ${"12:00:00"}`;
+      // payload.duration = new Date(str).getTime();
+      // payload.duration = 946742400000;
+      // console.log({ mudo: payload.duration });
       methods.reset(payload);
     },
   });
