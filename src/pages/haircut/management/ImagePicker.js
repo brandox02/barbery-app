@@ -36,8 +36,12 @@ export default function ImagePicker({ updateImage, initialImage }) {
   return (
     <View style={{ alignItems: "center", justifyContent: "center" }}>
       {image && (
-        <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
+        <Image
+          source={{ uri: image }}
+          style={{ width: 200, height: 200, borderRadius: 10 }}
+        />
       )}
+      {!image && <Image source={require("../../../../assets/image.png")} />}
       <Button
         style={{ marginTop: 20 }}
         title={image ? "Cargar otra Imagen" : "Cargar Imagen"}
