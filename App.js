@@ -28,7 +28,13 @@ export default function App() {
           <Route
             {...routeProps}
             key={routeProps.path}
-            element={<Layout>{routeProps.element}</Layout>}
+            element={
+              routeProps.noLayout ? (
+                routeProps.element
+              ) : (
+                <Layout>{routeProps.element}</Layout>
+              )
+            }
           />
         ))}
       </Routes>

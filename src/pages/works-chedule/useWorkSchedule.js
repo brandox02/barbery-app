@@ -1,9 +1,8 @@
 import { useMutation } from "@apollo/react-hooks";
 import dayjs from "dayjs";
 import { pick } from "lodash";
-import { useEffect, useReducer } from "react";
+import { useReducer } from "react";
 import { Alert } from "react-native";
-import { useNavigate } from "react-router-native";
 import { usePopulate } from "../../hooks/usePopulate";
 import { generateRandomId } from "../../utils/generateRandomId";
 import withGraphqlErrorHandler from "../../utils/withGraphqlErrorHandler";
@@ -14,20 +13,17 @@ import {
   DELETE_NON_WORK_INTERVAL,
   ON_CHANGE_TIME_INPUT,
   RESET_NON_WORK_INTERVAL,
+  initialState,
 } from "./reducer";
 
 export default function useWorkSchedule() {
-  const [saveWorkScheduleDaysMutation] = useMutation(SAVE_WORK_SCHEDULE_DAYS);
+  const [saveWorkScheduleDaysMutation, { loading }] = useMutation(
+    SAVE_WORK_SCHEDULE_DAYS
+  );
   const [{ items, dateEndInput, dateStartInput }, dispatch] = useReducer(
     reducer,
-    {
-      items: [],
-      dateEndInput: new Date(),
-      dateStartInput: new Date(),
-    }
+    initialState
   );
-
-  const navigate = useNavigate();
 
   const { populated } = usePopulate({
     variables: {},
@@ -72,19 +68,9 @@ export default function useWorkSchedule() {
       });
 
   const onSave = withGraphqlErrorHandler(async () => {
-    console.log(
-      JSON.stringify(
-        items.map((item) => ({
-          id: item.id,
-          nonWorkIntervals: item.nonWorkIntervals.map((x) =>
-            pick(x, ["start", "end"])
-          ),
-        }))
-      )
-    );
     await saveWorkScheduleDaysMutation({
       variables: {
-        workScheduleDay: items.map((item) => ({
+        workScheduleDays: items.map((item) => ({
           id: item.id,
           nonWorkIntervals: item.nonWorkIntervals.map((x) =>
             pick(x, ["start", "end"])
@@ -94,10 +80,9 @@ export default function useWorkSchedule() {
     });
 
     Alert.alert("Horarios guardados correctamente");
-    setTimeout(() => navigate(-1), 700);
   });
 
-  const members = {
+  return {
     items,
     dateEndInput,
     dateStartInput,
@@ -105,7 +90,6 @@ export default function useWorkSchedule() {
     onAddNonWorkInterval,
     onDeleteWorkInterval,
     onSave,
+    isLoading: !populated || loading,
   };
-
-  return members;
 }

@@ -19,9 +19,9 @@ export const GET_WORK_SCHEDULES = gql`
 
 export const SAVE_WORK_SCHEDULE_DAYS = gql`
   mutation SaveWorkScheduleDays(
-    $workScheduleDay: [WorkScheduleDayInput!]!
+    $workScheduleDays: [WorkScheduleDayInput!]!
   ) {
-    saveWorkScheduleDays(workScheduleDay: $workScheduleDay) {
+    saveWorkScheduleDays(workScheduleDays: $workScheduleDays) {
       id
       day
       start

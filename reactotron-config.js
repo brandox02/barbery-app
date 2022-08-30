@@ -4,10 +4,11 @@ import { NativeModules } from "react-native";
 
 const scriptURL = NativeModules.SourceCode.scriptURL;
 let scriptHostname = scriptURL.split("://")[1].split(":")[0];
-
+console.log({ scriptHostname });
 export default Reactotron
   // .configure({ name: "React Native Example Inspect" })
-  .configure({ host: scriptHostname })
+  .configure()
+
   // .use(
   //   networking({
   //     ignoreContentTypes: /^(image)\/.*$/i,

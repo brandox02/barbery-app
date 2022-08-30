@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
-    width: "80%",
+    // width: "80%",
     // borderWidth: 1,
   },
   logo: {

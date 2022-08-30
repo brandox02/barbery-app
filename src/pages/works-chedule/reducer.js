@@ -5,6 +5,12 @@ export const DELETE_NON_WORK_INTERVAL = "DELETE_NON_WORK_INTERVAL";
 export const RESET_NON_WORK_INTERVAL = "RESET_NON_WORK_INTERVAL";
 export const ON_CHANGE_TIME_INPUT = "ON_CHANGE_TIME_INPUT";
 
+export const initialState = {
+  items: [],
+  dateEndInput: new Date(),
+  dateStartInput: new Date(),
+}
+
 export function reducer(state, { type, payload }) {
   const newState = { ...state };
 
@@ -59,3 +65,5 @@ export function reducer(state, { type, payload }) {
   }
   return newState;
 }
+
+

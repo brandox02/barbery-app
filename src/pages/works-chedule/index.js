@@ -4,6 +4,7 @@ import { Divider, List } from "react-native-paper";
 import HeaderPage from "../../components/HeaderPage";
 import useWorkSchedule from "./useWorkSchedule";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import Spinner from "react-native-loading-spinner-overlay/lib";
 
 export default function WorkSchedule() {
   const {
@@ -14,10 +15,12 @@ export default function WorkSchedule() {
     onAddNonWorkInterval,
     onDeleteWorkInterval,
     onSave,
+    isLoading,
   } = useWorkSchedule();
   return (
     <View>
       <HeaderPage text={"Horarios"} />
+      <Spinner visible={isLoading} />
       <View style={{ alignItems: "flex-end", paddingRight: 20 }}>
         <Button title="Guardar" onPress={onSave} />
       </View>
@@ -35,12 +38,13 @@ export default function WorkSchedule() {
         >
           {items.map((item) => (
             <List.Accordion
+              key={item.id}
               title={item.day}
               left={(props) => <List.Icon {...props} icon="briefcase" />}
             >
               {item.nonWorkIntervals.length ? (
                 item.nonWorkIntervals.map((nonWorkInterval) => (
-                  <View>
+                  <View key={nonWorkInterval.id}>
                     <List.Item
                       left={(props) => (
                         <List.Icon {...props} icon="clock-time-nine-outline" />

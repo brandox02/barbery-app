@@ -21,6 +21,8 @@ export default function useLogIn({ setToken }) {
   const onSubmit = handleSubmit(
     withGraphqlErrorHandler(async (data) => {
       const payload = pick(data, ["password", "username"]);
+      payload.password = payload.password.trim();
+      payload.username = payload.username.trim();
 
       const response = await logInByCredentialMutation({
         variables: { credentials: payload },

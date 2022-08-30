@@ -8,7 +8,17 @@ import gql from "graphql-tag";
 
 const LOGIN_BY_TOKEN_MUTATION = gql`
   mutation LogInByToken($token: String!) {
-    token: logInByToken(token: $token)
+    logInByToken(token: $token) {
+      user {
+        id
+        email
+        firstname
+        isAdmin
+        lastname
+        password
+        username
+      }
+    }
   }
 `;
 
@@ -36,7 +46,8 @@ export default function useToken() {
     if (token) {
       logInByTokenMutation({ variables: { token } })
         .then((response) => {
-          navigate(response.data.token ? "/haircuts" : "/");
+          // console.log({ edison: response.data.logInByToken.user });
+          navigate(response.data.logInByToken.user ? "/haircuts" : "/");
           setAppState((state) => ({
             ...state,
             user: {

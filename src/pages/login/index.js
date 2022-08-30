@@ -1,6 +1,13 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { Image, StyleSheet, View, Text, Button } from "react-native";
+import {
+  Image,
+  StyleSheet,
+  View,
+  Text,
+  Button,
+  Dimensions,
+} from "react-native";
 import { RHFInput } from "../../components/RHFTextInput";
 import useLogIn from "./useLogIn";
 
@@ -8,7 +15,13 @@ export default function LogIn({ setToken }) {
   const { control, onSubmit, goToSignIn } = useLogIn({ setToken });
   return (
     <View style={styles.container}>
-      <View>
+      <View
+        style={{
+          alignItems: "center",
+          justifyContent: "center",
+          // borderWidth: 1,
+        }}
+      >
         <Image
           style={styles.logo}
           source={require("../../../assets/logo.jpg")}
@@ -55,10 +68,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
-    width: "80%"
+    // width: "80%",
   },
   logo: {
-    marginLeft: -30,
+    // marginLeft:
+    // borderWidth: 1,
     width: 300,
     height: 150,
   },
@@ -82,6 +96,8 @@ const styles = StyleSheet.create({
     marginTop: 10,
     width: "100%",
     display: "flex",
+    // borderTopWidth: 0.3,
+    borderTopColor: "grey",
     flexDirection: "row",
     justifyContent: "space-around",
   },
