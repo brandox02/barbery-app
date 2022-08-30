@@ -16,8 +16,6 @@ import ImagePicker from "./ImagePicker";
 import useManagement from "./useManagement";
 import { Divider } from "react-native-paper";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import dayjs from "dayjs";
-
 export default function HaircutManagement() {
   const { handleSubmit, imageError, methods, haircutId, goToBack, isLoading } =
     useManagement();

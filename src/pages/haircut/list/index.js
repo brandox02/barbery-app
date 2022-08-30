@@ -16,12 +16,6 @@ import Spinner from "../../../components/Spinner";
 export default function Haircut() {
   const { haircuts, goToCreate, goToUpdate, loading } = useHaircut();
 
-  // if (loadingHaircuts) {
-  //   return <Text>App loading...</Text>;
-  // }
-
-  // console.log({ haircuts, loadingHaircuts });
-
   return (
     <View style={{}}>
       <Spinner visible={loading} />
@@ -39,17 +33,23 @@ export default function Haircut() {
         </View>
       </View>
       <ScrollView style={{ height: "100%" }}>
-        {haircuts?.map(({ image, name, price, duration, id }) => (
-          <Card
-            key={id}
-            duration={duration}
-            image={image}
-            price={price}
-            title={name}
-            onEdit={() => goToUpdate(id)}
-            onDelete={() => {}}
-          />
-        ))}
+        {haircuts.length ? (
+          haircuts.map(({ image, name, price, duration, id }) => (
+            <Card
+              key={id}
+              duration={duration}
+              image={image}
+              price={price}
+              title={name}
+              onEdit={() => goToUpdate(id)}
+              onDelete={() => {}}
+            />
+          ))
+        ) : (
+          <View style={{ alignItems: "center" }}>
+            <Text>{"No hay ningun corte de pelo para mostrar"}</Text>
+          </View>
+        )}
       </ScrollView>
     </View>
   );

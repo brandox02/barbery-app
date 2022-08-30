@@ -1,20 +1,20 @@
 import { useMutation } from "@apollo/react-hooks";
-import gql from "graphql-tag";
-import { omit, pick } from "lodash";
+import { pick } from "lodash";
 import withGraphqlErrorHandler from "../../../utils/withGraphqlErrorHandler";
-import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { Alert } from "react-native";
 import { useNavigate, useParams } from "react-router-native";
 import { useForm } from "react-hook-form";
 import { usePopulate } from "../../../hooks/usePopulate";
 import { GET_HAIRCUT, SAVE_MUTATION } from "./queries";
+import { timeToUnix } from "../../../utils/timeToUnix";
+import { unixToTime } from "../../../utils/unixToTime";
 
 export default function useManagement() {
   const methods = useForm({
     defaultValues: {
       name: null,
-      duration: null,
+      duration: timeToUnix("00:30:00"),
       image: null,
       price: null,
     },
@@ -27,23 +27,28 @@ export default function useManagement() {
 
   const { populated } = usePopulate({
     graphqlQuery: GET_HAIRCUT,
-    isUpdating: haircutId,
     variables: { where: { id: parseInt(haircutId) } },
     onPopulate: async (data) => {
-      const payload = pick(data?.haircut, [
-        "id",
-        "name",
-        "duration",
-        "image",
-        "price",
-      ]);
-      payload.price = payload.price.toString();
-      console.log(payload.duration);
-      const str = ```2001-01-01 ${"12:00:00"}`;
-      // payload.duration = new Date(str).getTime();
-      // payload.duration = 946742400000;
-      // console.log({ mudo: payload.duration });
-      methods.reset(payload);
+      if (haircutId) {
+        if (data?.haircut) {
+          const payload = pick(data?.haircut, [
+            "id",
+            "name",
+            "duration",
+            "image",
+            "price",
+          ]);
+          payload.price = payload.price.toString();
+          payload.duration = timeToUnix(payload.duration);
+
+          methods.reset(payload);
+        } else {
+          Alert.alert(
+            "Ocurrió un error",
+            "Ocurrió un error a la hora de obtener la información de este corte de pelo"
+          );
+        }
+      }
     },
   });
 
@@ -66,15 +71,16 @@ export default function useManagement() {
           return;
         }
         setIsLoading(true);
-
         const payload = pick(data, ["image", "name", "price", "duration"]);
         payload.price = parseInt(payload.price);
-        payload.duration = dayjs().format("HH:mm:ss");
+        payload.duration = unixToTime(payload.duration);
         if (haircutId) payload.id = parseInt(haircutId);
-        console.log({ payload: omit(payload, "image") });
         await saveMutation({ variables: { haircut: payload } });
+
         setIsLoading(false);
-        Alert.alert("Corte de pelo actualizado correctamente");
+        Alert.alert(
+          `Corte de pelo ${haircutId ? "actualizado" : "creado"} correctamente`
+        );
         setTimeout(() => goToBack(), 1000);
       },
       () => setIsLoading(false)

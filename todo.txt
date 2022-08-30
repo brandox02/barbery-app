@@ -3,3 +3,9 @@
 
 
 reload reactotron: adb reverse tcp:9090 tcp:9090
+
+
+10.0.0.105
+192.168.100.47
+
+me quede haciendo que funcione el boton guardar

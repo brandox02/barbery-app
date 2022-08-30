@@ -5,7 +5,6 @@ if (!Boolean(parseInt(IS_PRODUCTION))) {
     console.log("Reactotron Configured")
   );
 }
-
 import React from "react";
 import { ApolloProvider } from "@apollo/react-hooks";
 import makeApolloClient from "./src/apollo";

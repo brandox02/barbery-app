@@ -4,22 +4,17 @@ import { Alert } from "react-native";
 import { useNavigate } from "react-router-native";
 import { apolloClient } from "../../App";
 
-export function usePopulate({
-  variables,
-  graphqlQuery,
-  onPopulate,
-  isUpdating,
-}) {
+export function usePopulate({ variables = {}, graphqlQuery, onPopulate }) {
   const { data, loading } = useQuery(graphqlQuery, {
     variables,
     client: apolloClient,
     fetchPolicy: "network-only",
   });
-  const [populated, setPopulated] = useState(!isUpdating);
+  const [populated, setPopulated] = useState(false);
   const navigate = useNavigate(-1);
 
   useEffect(() => {
-    if (isUpdating && !loading && data?.haircut) {
+    if (!loading && data) {
       onPopulate(data)
         .then(() => {
           setPopulated(true);
