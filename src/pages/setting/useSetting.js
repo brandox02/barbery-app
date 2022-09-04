@@ -1,4 +1,8 @@
+import { useNavigate } from "react-router-native";
+
 export default function useSetting({ setToken }) {
   const logout = () => setToken(null);
-  return { logout };
+  const navigate = useNavigate();
+  const goToUpdateProfilePage = () => navigate("/settings/update-profile");
+  return { logout, goToUpdateProfilePage };
 }

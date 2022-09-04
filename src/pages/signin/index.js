@@ -4,11 +4,15 @@ import { Image, StyleSheet, View, Text, Button } from "react-native";
 import useSignIn from "./useSignIn";
 import { getInputValidates } from "./getInputValidates";
 import { RHFInput } from "../../components/RHFTextInput";
+import Spinner from "react-native-loading-spinner-overlay/lib";
 
 export default function SignIn({ setToken }) {
-  const { control, onSubmit, methods, goToLogin } = useSignIn({ setToken });
+  const { control, onSubmit, methods, goToLogin, isLoading } = useSignIn({
+    setToken,
+  });
   return (
     <View style={styles.container}>
+      <Spinner visible={isLoading} />
       <View>
         <Image
           style={styles.logo}

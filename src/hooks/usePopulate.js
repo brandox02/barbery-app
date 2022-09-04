@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import { useQuery } from "react-apollo";
 import { Alert } from "react-native";
 import { useNavigate } from "react-router-native";
-import { apolloClient } from "../../App";
+import { useAppContext } from "../appProvider";
 
 export function usePopulate({ variables = {}, graphqlQuery, onPopulate }) {
+  const [{ apolloClient }] = useAppContext();
   const { data, loading } = useQuery(graphqlQuery, {
     variables,
     client: apolloClient,

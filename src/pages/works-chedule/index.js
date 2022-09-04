@@ -19,7 +19,7 @@ export default function WorkSchedule() {
   } = useWorkSchedule();
   return (
     <View>
-      <HeaderPage text={"Horarios"} />
+      <HeaderPage title={"Horarios"} />
       <Spinner visible={isLoading} />
       <View style={{ alignItems: "flex-end", paddingRight: 20 }}>
         <Button title="Guardar" onPress={onSave} />

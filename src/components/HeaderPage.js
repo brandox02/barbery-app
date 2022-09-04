@@ -1,53 +1,37 @@
 import React from "react";
-import { StyleSheet, Text, Image, View, Pressable } from "react-native";
-import { useNavigate } from "react-router-native";
-import conditionalObj from "../utils/conditionalObj";
+import { StyleSheet, Text, Image, View, Dimensions } from "react-native";
+import { useAppContext } from "../appProvider";
 
-const HeaderPage = ({ text, onBack = async () => {}, showBackButton }) => {
-  const navigate = useNavigate();
-  async function _onBack() {
-    await onBack();
-    navigate(-1);
-  }
+const HeaderPage = ({ title }) => {
+  const [{ user }] = useAppContext();
 
   return (
     <View style={styles.container}>
-      <View
-        style={conditionalObj({
-          condition: !showBackButton,
-          conditionlObj: { marginLeft: 15 },
-          obj: styles.left,
-        })}
-      >
-        {showBackButton && (
-          <View style={styles.backButtonContainer}>
-            <Pressable onPress={_onBack}>
-              <Image
-                source={require("../../assets/back-icon.png")}
-                style={{ width: 40, height: 40, marginLeft: -10 }}
-              />
-            </Pressable>
-          </View>
-        )}
+      <View style={styles.left}>
         <View>
           <Text
             style={{
               fontWeight: "bold",
               fontSize: 30,
-              // marginTop: 10,
               marginBottom: 10,
               top: 0,
             }}
           >
-            {text}
+            {title}
           </Text>
-          <Text style={{ fontSize: 16 }}>{"Brandon Fernández"}</Text>
+          <Text
+            style={{ fontSize: 16 }}
+          >{`${user?.firstname} ${user?.lastname}`}</Text>
         </View>
       </View>
       <View style={styles.right}>
         <Image
           style={styles.profileImage}
-          source={require("../../assets/me.jpeg")}
+          source={
+            user?.image
+              ? { uri: user.image }
+              : require("../../assets/non-profile-image.png")
+          }
         />
       </View>
     </View>
@@ -60,13 +44,12 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingHorizontal: 10,
     paddingVertical: 15,
-
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    width: "100%",
-    // border styles
+    width: Dimensions.get("window").width,
+    right: 20,
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -85,16 +68,14 @@ const styles = StyleSheet.create({
   left: {
     justifyContent: "center",
     flexDirection: "row",
-
-    // borderWidth: 1,
+    marginLeft: 15,
   },
   right: {
     justifyContent: "center",
+    right: 10,
   },
   backButtonContainer: {
-    // borderWidth: 1,
     padding: 10,
-    // marginRight: 10,
   },
 });
 

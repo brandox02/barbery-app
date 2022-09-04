@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import withGraphqlErrorHandler from "../../utils/withGraphqlErrorHandler";
 import { useNavigate } from "react-router-native";
 import { useMutation } from "@apollo/react-hooks";
+import { useState } from "react";
 
 const SIGN_IN_MUTATION = gql`
   mutation SignIn($user: SignInInput!) {
@@ -24,6 +25,7 @@ const defaultValues = {
 
 export default function useSignIn({ setToken }) {
   const [signInMutation] = useMutation(SIGN_IN_MUTATION);
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -33,23 +35,33 @@ export default function useSignIn({ setToken }) {
   const { control, handleSubmit } = methods;
 
   const onSubmit = handleSubmit(
-    withGraphqlErrorHandler(async (data) => {
-      const payload = pick(data, [
-        "email",
-        "firstname",
-        "lastname",
-        "password",
-        "username",
-      ]);
+    withGraphqlErrorHandler(
+      async (data) => {
+        setIsLoading(true);
+        const payload = pick(data, [
+          "email",
+          "firstname",
+          "lastname",
+          "password",
+          "username",
+        ]);
+        payload.email = payload.email.trim();
+        payload.firstname = payload.firstname.trim();
+        payload.lastname = payload.lastname.trim();
+        payload.password = payload.password.trim();
+        payload.username = payload.username.trim();
 
-      const response = await signInMutation({ variables: { user: payload } });
-      const token = response.data.signIn.token;
+        const response = await signInMutation({ variables: { user: payload } });
+        const token = response.data.signIn.token;
 
-      await setToken(token);
-    })
+        await setToken(token);
+        setIsLoading(false);
+      },
+      () => setIsLoading(false)
+    )
   );
 
   const goToLogin = () => navigate("/");
 
-  return { onSubmit, control, methods, goToLogin };
+  return { onSubmit, control, methods, goToLogin, isLoading };
 }

@@ -6,15 +6,16 @@ import {
   View,
   Text,
   Button,
-  Dimensions,
 } from "react-native";
+import Spinner from "react-native-loading-spinner-overlay/lib";
 import { RHFInput } from "../../components/RHFTextInput";
 import useLogIn from "./useLogIn";
 
 export default function LogIn({ setToken }) {
-  const { control, onSubmit, goToSignIn } = useLogIn({ setToken });
+  const { control, onSubmit, goToSignIn, isLoading } = useLogIn({ setToken });
   return (
     <View style={styles.container}>
+      <Spinner visible={isLoading} />
       <View
         style={{
           alignItems: "center",
@@ -68,11 +69,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
-    // width: "80%",
   },
   logo: {
-    // marginLeft:
-    // borderWidth: 1,
     width: 300,
     height: 150,
   },

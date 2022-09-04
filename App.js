@@ -1,9 +1,7 @@
-import { IS_PRODUCTION } from "@env";
-
-if (!Boolean(parseInt(IS_PRODUCTION))) {
-  import("./reactotron-config").then(() =>
-    console.log("Reactotron Configured")
-  );
+if (!isProductionEnv()) {
+  // import("./reactotron-config").then(() =>
+  //   console.log("Reactotron Configured")
+  // );
 }
 import React from "react";
 import { ApolloProvider } from "@apollo/react-hooks";
@@ -15,16 +13,17 @@ import routes from "./src/routes";
 import { AppProvider } from "./src/appProvider";
 import { Layout } from "./src/layout";
 import { Provider } from "react-native-paper";
+import { isProductionEnv } from "./src/utils/isProductionEnv";
 
-export const apolloClient = makeApolloClient();
+const apolloClient = makeApolloClient();
 
 export default function App() {
   function DirectlyChild() {
-    const [_, setToken] = useToken();
+    const [_, setToken, reloadUserInfo] = useToken();
 
     return (
       <Routes>
-        {routes({ setToken }).map((routeProps) => (
+        {routes({ setToken, reloadUserInfo }).map((routeProps) => (
           <Route
             {...routeProps}
             key={routeProps.path}
@@ -43,7 +42,7 @@ export default function App() {
   return (
     <Provider>
       <ApolloProvider client={apolloClient}>
-        <AppProvider>
+        <AppProvider apolloClient={apolloClient}>
           <NativeRouter>
             <DirectlyChild />
           </NativeRouter>

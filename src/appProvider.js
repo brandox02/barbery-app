@@ -6,9 +6,10 @@ const context = createContext();
 
 export const useAppContext = () => useContext(context);
 
-export const AppProvider = ({ children }) => {
+export const AppProvider = ({ children, ...props }) => {
   const [state, setState] = useState({
     isProduction: Boolean(parseInt(IS_PRODUCTION)),
+    ...props,
   });
 
   return (

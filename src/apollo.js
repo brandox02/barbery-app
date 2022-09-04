@@ -2,11 +2,15 @@ import { HttpLink } from "apollo-link-http";
 import { ApolloClient } from "apollo-client";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { API_URL } from "@env";
-console.log({ API_URL });
+import { isProductionEnv } from "./utils/isProductionEnv";
+import { getLocalhost } from "./utils/getLocalhost";
+
 const makeApolloClient = () => {
+  const uri = isProductionEnv() ? API_URL : `${getLocalhost()}:5000`;
+  console.log({ uri });
   // create an apollo link instance, a network interface for apollo client
   const link = new HttpLink({
-    uri: API_URL,
+    uri,
     //  headers: {
     //    Authorization: `Bearer ${token}`
     //  }

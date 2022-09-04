@@ -6,6 +6,8 @@ import { Alert } from "react-native";
 import { useAppContext } from "../appProvider";
 import gql from "graphql-tag";
 
+const HOME_ROUTE = "/haircuts";
+
 const LOGIN_BY_TOKEN_MUTATION = gql`
   mutation LogInByToken($token: String!) {
     logInByToken(token: $token) {
@@ -17,6 +19,7 @@ const LOGIN_BY_TOKEN_MUTATION = gql`
         lastname
         password
         username
+        image
       }
     }
   }
@@ -46,18 +49,18 @@ export default function useToken() {
     if (token) {
       logInByTokenMutation({ variables: { token } })
         .then((response) => {
+          // console.log({ response: response.data.logInByToken.user });
+          const { user } = response.data.logInByToken;
           // console.log({ edison: response.data.logInByToken.user });
-          navigate(response.data.logInByToken.user ? "/haircuts" : "/");
+          navigate(response.data.logInByToken.user ? HOME_ROUTE : "/");
           setAppState((state) => ({
             ...state,
-            user: {
-              id: -1,
-              firstname: "en espera del back-end",
-            },
+            user,
           }));
         })
         .catch(() => {
           Alert.alert("Error", "No se pudo iniciar sesión");
+          navigate("/");
         });
     } else {
       navigate("/");
@@ -75,5 +78,7 @@ export default function useToken() {
     }
   }
 
-  return [token, _setToken];
+  const reloadUserInfo = () => logInByTokenMutation({ variables: { token } });
+
+  return [token, _setToken, reloadUserInfo];
 }

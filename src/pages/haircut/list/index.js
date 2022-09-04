@@ -1,13 +1,5 @@
 import * as React from "react";
-import {
-  Button,
-  Image,
-  Modal,
-  Pressable,
-  ScrollView,
-  Text,
-  View,
-} from "react-native";
+import { Button, Text, View } from "react-native";
 import Card from "./card";
 import HeaderPage from "../../../components/HeaderPage";
 import useHaircut from "./useHaircut";
@@ -17,22 +9,21 @@ export default function Haircut() {
   const { haircuts, goToCreate, goToUpdate, loading } = useHaircut();
 
   return (
-    <View style={{}}>
+    <>
+      <HeaderPage title={"Cortes de Pelo"} />
       <Spinner visible={loading} />
       <View
         style={{
           flexDirection: "column",
-          width: "100%",
           justifyContent: "space-between",
           position: "relative",
+          alignItems: "flex-end",
         }}
       >
-        <HeaderPage text="Cortes de pelo" />
-        <View style={{ alignItems: "flex-end", paddingRight: 10 }}>
-          <Button title="Nuevo Corte" onPress={goToCreate} />
-        </View>
+        <Button title="Nuevo Corte" onPress={goToCreate} />
       </View>
-      <ScrollView style={{ height: "100%" }}>
+      <View style={{}}>
+        {/* <AutoScrollView scrollEnabled style={{}}> */}
         {haircuts.length ? (
           haircuts.map(({ image, name, price, duration, id }) => (
             <Card
@@ -50,7 +41,8 @@ export default function Haircut() {
             <Text>{"No hay ningun corte de pelo para mostrar"}</Text>
           </View>
         )}
-      </ScrollView>
-    </View>
+        {/* </AutoScrollView> */}
+      </View>
+    </>
   );
 }

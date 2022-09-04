@@ -1,9 +1,10 @@
 import gql from "graphql-tag";
 import { useQuery } from "react-apollo";
 import { useNavigate } from "react-router-native";
-import { apolloClient } from "../../../../App";
+import { useAppContext } from "../../../appProvider";
+// import { apolloClient } from "../../../../App";
 
-const HAIRCUTS_QUERY = gql`
+export const HAIRCUTS_QUERY = gql`
   query Haircuts {
     haircuts {
       id
@@ -16,6 +17,7 @@ const HAIRCUTS_QUERY = gql`
 `;
 
 export default function useHaircut() {
+  const [{ apolloClient }] = useAppContext();
   const { data, loading } = useQuery(HAIRCUTS_QUERY, {
     variables: {},
     client: apolloClient,

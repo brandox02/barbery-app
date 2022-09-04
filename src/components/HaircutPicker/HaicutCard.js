@@ -1,15 +1,14 @@
 import dayjs from "dayjs";
 import React from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Button, Image, StyleSheet, Text, View } from "react-native";
 import NumberFormat from "react-number-format";
-import CardMenu from "./Menu";
-export default function Card({
+
+export default function HaircutCard({
   image,
   title,
   price,
   duration,
-  onEdit,
-  onDelete,
+  onSelectHaircut,
 }) {
   return (
     <View style={styles.container}>
@@ -21,15 +20,13 @@ export default function Card({
         }}
       >
         <Text style={styles.title}>{title}</Text>
-        <CardMenu onDelete={onDelete} onEdit={onEdit} />
+        <Button title="Seleccionar" onPress={onSelectHaircut} />
       </View>
 
       <View style={styles.card}>
         <Image
           source={
-            image
-              ? { uri: image }
-              : require("../../../../../assets/haircut-1.webp")
+            image ? { uri: image } : require("../../../assets/haircut-1.webp")
           }
           style={styles.image}
         />
@@ -47,7 +44,7 @@ export default function Card({
             }}
           >
             <Image
-              source={require("../../../../../assets/price-icon.png")}
+              source={require("../../../assets/price-icon.png")}
               style={{ width: 50, height: 50 }}
             />
             <NumberFormat
@@ -65,7 +62,7 @@ export default function Card({
             }}
           >
             <Image
-              source={require("../../../../../assets/duration-icon.jpg")}
+              source={require("../../../assets/duration-icon.jpg")}
               style={{ width: 35, height: 35, marginLeft: 4 }}
             />
             <Text style={styles.duration}>
@@ -83,7 +80,7 @@ const styles = StyleSheet.create({
     padding: 20,
     // margin: 20,
     backgroundColor: "white",
-    marginTop: 15,
+    margin: 15,
     // border styles
     borderWidth: 0.2,
     borderColor: "grey",
