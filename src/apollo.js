@@ -7,7 +7,6 @@ import { getLocalhost } from "./utils/getLocalhost";
 
 const makeApolloClient = () => {
   const uri = isProductionEnv() ? API_URL : `${getLocalhost()}:5000`;
-  console.log({ uri });
   // create an apollo link instance, a network interface for apollo client
   const link = new HttpLink({
     uri,

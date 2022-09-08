@@ -4,7 +4,7 @@ import { NativeModules } from "react-native";
 
 const scriptURL = NativeModules.SourceCode.scriptURL;
 let scriptHostname = scriptURL.split("://")[1].split(":")[0];
-console.log({ scriptHostname, scriptURL });
+// console.log({ scriptHostname, scriptURL });
 export default Reactotron
   // .configure({ name: "React Native Example Inspect" })
   .configure({ host: scriptHostname })

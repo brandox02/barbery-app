@@ -19,7 +19,7 @@ export default function useUpdateProfile({ setToken }) {
   const methods = useForm({
     defaultValues: user,
   });
-  // console.log({ firstname: user.firstname, id: user.id });
+
   const navigate = useNavigate();
 
   const onUpdateProfile = methods.handleSubmit(

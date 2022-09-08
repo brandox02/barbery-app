@@ -14,7 +14,6 @@ function Card({ haircut }) {
     return <></>;
   }
   const { name, price, image, duration } = haircut;
-  console.log({ duration });
   return (
     <View
       style={{

@@ -1,12 +1,23 @@
 import React from "react";
-import { Button, Text, View } from "react-native";
+import { Button, ScrollView, Text, View } from "react-native";
 import HeaderModal from "../../../components/HeaderModal";
 import useManagement from "./useManagement";
 import HaircutPicker from "../../../components/HaircutPicker";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Divider } from "react-native-paper";
+import AvalibleDates from "../../../components/AvalibleDates";
+import dayjs from "dayjs";
+import { getHeightByPercent } from "../../../utils/getHeightByPercent";
+
 export default function ScheduleManagement() {
-  const { haircutId, setHaircutId, date, setDate } = useManagement();
+  const {
+    haircutId,
+    setHaircutId,
+    date,
+    setDate,
+    selectedScheduleDate,
+    setScheduleDate,
+  } = useManagement();
 
   return (
     <View>
@@ -27,6 +38,25 @@ export default function ScheduleManagement() {
               value={date}
               onChange={(_, x) => setDate(new Date(x))}
             />
+            <ScrollView>
+              <AvalibleDates
+                duration={"01:00:00"}
+                unAvaibleSchedules={[
+                  {
+                    start: "00:00:00",
+                    end: "12:00:00",
+                    type: "non-work",
+                  },
+                  {
+                    start: "17:45:00",
+                    end: "18:30:00",
+                    type: "non-work",
+                  },
+                ]}
+                onSelectSchedule={setScheduleDate}
+                selectedSchedule={selectedScheduleDate}
+              />
+            </ScrollView>
           </View>
         </View>
       </View>

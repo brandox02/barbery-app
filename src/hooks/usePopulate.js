@@ -26,8 +26,8 @@ export function usePopulate({ variables = {}, graphqlQuery, onPopulate }) {
             "Algo salió mal",
             "Ha ocurrido un error, intentalo de nuevo mas tarde"
           );
-          navigate(-1);
           console.error(err);
+          navigate(-1);
         });
     }
   }, [loading, data]);

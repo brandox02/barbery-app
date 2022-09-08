@@ -1,4 +1,4 @@
-import { pick } from "lodash";
+
 
 export const ADD_NON_WORK_INTERVAL = "ADD_NON_WORK_INTERVAL";
 export const DELETE_NON_WORK_INTERVAL = "DELETE_NON_WORK_INTERVAL";

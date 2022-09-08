@@ -45,12 +45,7 @@ export const Layout = ({ children }) => {
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          // stickyHeaderIndices={[0]}
-        >
-          {children}
-        </ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>{children}</ScrollView>
       </View>
       <View style={styles.menuContainer}>
         {menuItems.map(({ img, label, id, to }) => (

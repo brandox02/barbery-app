@@ -1,5 +1,5 @@
 if (!isProductionEnv()) {
-  // import("./reactotron-config").then(() =>
+  // import("./src/reactotron-config").then(() =>
   //   console.log("Reactotron Configured")
   // );
 }
