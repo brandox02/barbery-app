@@ -2,7 +2,6 @@ import gql from "graphql-tag";
 import { useQuery } from "react-apollo";
 import { useNavigate } from "react-router-native";
 import { useAppContext } from "../../../appProvider";
-// import { apolloClient } from "../../../../App";
 
 export const HAIRCUTS_QUERY = gql`
   query Haircuts {

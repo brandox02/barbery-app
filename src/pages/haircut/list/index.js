@@ -4,10 +4,11 @@ import Card from "./card";
 import HeaderPage from "../../../components/HeaderPage";
 import useHaircut from "./useHaircut";
 import Spinner from "../../../components/Spinner";
+import { useAppContext } from "../../../appProvider";
 
 export default function Haircut() {
   const { haircuts, goToCreate, goToUpdate, loading } = useHaircut();
-
+  const [{ user }] = useAppContext();
   return (
     <>
       <HeaderPage title={"Cortes de Pelo"} />
@@ -20,10 +21,9 @@ export default function Haircut() {
           alignItems: "flex-end",
         }}
       >
-        <Button title="Nuevo Corte" onPress={goToCreate} />
+        {user?.isAdmin && <Button title="Nuevo Corte" onPress={goToCreate} />}
       </View>
       <View style={{}}>
-        {/* <AutoScrollView scrollEnabled style={{}}> */}
         {haircuts.length ? (
           haircuts.map(({ image, name, price, duration, id }) => (
             <Card
@@ -41,7 +41,6 @@ export default function Haircut() {
             <Text>{"No hay ningun corte de pelo para mostrar"}</Text>
           </View>
         )}
-        {/* </AutoScrollView> */}
       </View>
     </>
   );

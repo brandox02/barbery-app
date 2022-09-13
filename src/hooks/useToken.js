@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-native";
 import { Alert } from "react-native";
 import { useAppContext } from "../appProvider";
 import gql from "graphql-tag";
+import makeApolloClient, { apolloClient } from "../apollo";
 
 const HOME_ROUTE = "/haircuts";
 
@@ -49,13 +50,16 @@ export default function useToken() {
     if (token) {
       logInByTokenMutation({ variables: { token } })
         .then((response) => {
-          // console.log({ response: response.data.logInByToken.user });
           const { user } = response.data.logInByToken;
-          // console.log({ edison: response.data.logInByToken.user });
           navigate(response.data.logInByToken.user ? HOME_ROUTE : "/");
+
+          const apolloClient = makeApolloClient(
+            "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MjQsInVzZXJuYW1lIjoiZmYiLCJlbWFpbCI6ImJyQGdvYi5kbyIsInBhc3N3b3JkIjoiZmYiLCJmaXJzdG5hbWUiOiJmZiIsImxhc3RuYW1lIjoiZmYiLCJpbWFnZSI6bnVsbCwiaXNBZG1pbiI6ZmFsc2UsImNyZWF0ZWRBdCI6IjIwMjItMDgtMTZUMjE6MDE6MDYuOTc4WiIsInVwZGF0ZWRBdCI6IjIwMjItMDktMDFUMTk6Mzk6MjAuMjAxWiJ9.C9aMfKxtRgv-aFlq6HMw1jETz2aDfRg04caYXSwjono"
+          );
           setAppState((state) => ({
             ...state,
             user,
+            apolloClient,
           }));
         })
         .catch(() => {

@@ -2,6 +2,8 @@ import dayjs from "dayjs";
 import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import NumberFormat from "react-number-format";
+import { useAppContext } from "../../../../appProvider";
+import { timeToUnix } from "../../../../utils/timeToUnix";
 import CardMenu from "./Menu";
 export default function Card({
   image,
@@ -11,6 +13,7 @@ export default function Card({
   onEdit,
   onDelete,
 }) {
+  const [{ user }] = useAppContext();
   return (
     <View style={styles.container}>
       <View
@@ -20,8 +23,8 @@ export default function Card({
           flexDirection: "row",
         }}
       >
-        <Text style={styles.title}>{title}</Text>
-        <CardMenu onDelete={onDelete} onEdit={onEdit} />
+        <Text style={{ ...styles.title , paddingVertical: 15}}>{title}</Text>
+        {user?.isAdmin && <CardMenu onDelete={onDelete} onEdit={onEdit} />}
       </View>
 
       <View style={styles.card}>
@@ -69,7 +72,7 @@ export default function Card({
               style={{ width: 35, height: 35, marginLeft: 4 }}
             />
             <Text style={styles.duration}>
-              {dayjs(`2001-01-01 ${duration}`).format("HH:mm")}
+              {dayjs(timeToUnix(duration)).format("HH:mm")}
             </Text>
           </View>
         </View>

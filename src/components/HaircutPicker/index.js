@@ -50,7 +50,7 @@ function Card({ haircut }) {
     </View>
   );
 }
-export default function HaircutPicker({ haircutId, setHaircutId }) {
+export default function HaircutPicker({ haircut, setHaircut }) {
   const [haircuts, setHaircuts] = useState([]);
   const [visible, setVisible] = useState(false);
   usePopulate({
@@ -63,12 +63,12 @@ export default function HaircutPicker({ haircutId, setHaircutId }) {
   return (
     <View>
       <Text style={{ fontSize: 16, marginTop: 20 }}>
-        {"Selecciona el Corte de Pelo"}
+        {"Selecciona el Corte de Pelo:"}
       </Text>
-      <Card haircut={haircuts.find((haircut) => haircut.id === haircutId)} />
+      <Card haircut={haircut} />
       <View style={{ alignItems: "flex-end" }}>
         <Button
-          title={haircutId ? "Seleccionar Otro" : "Seleccionar"}
+          title={haircut ? "Seleccionar Otro" : "Seleccionar"}
           onPress={() => setVisible(true)}
         />
       </View>
@@ -84,21 +84,24 @@ export default function HaircutPicker({ haircutId, setHaircutId }) {
             Selector de Cortes de Pelo
           </Text>
           <ScrollView style={{ marginBottom: 120 }}>
-            {haircuts.map(({ image, name, price, duration, id }) => (
-              <View key={id}>
-                <HaircutCard
-                  key={id}
-                  duration={duration}
-                  image={image}
-                  price={price}
-                  title={name}
-                  onSelectHaircut={() => {
-                    setHaircutId(id);
-                    setVisible(false);
-                  }}
-                />
-              </View>
-            ))}
+            {haircuts.map((haircut) => {
+              const { image, name, price, duration, id } = haircut;
+              return (
+                <View key={id}>
+                  <HaircutCard
+                    key={id}
+                    duration={duration}
+                    image={image}
+                    price={price}
+                    title={name}
+                    onSelectHaircut={() => {
+                      setHaircut(haircut);
+                      setVisible(false);
+                    }}
+                  />
+                </View>
+              );
+            })}
           </ScrollView>
         </View>
       </Modal>

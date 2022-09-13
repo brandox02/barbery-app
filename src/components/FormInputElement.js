@@ -10,6 +10,7 @@ export default function FormInputElement({
   placeholder = "",
   image = require("../../assets/form-icon.png"),
   editable = true,
+  type = "default" ,
 }) {
   return (
     <View style={{ display: "flex", flexDirection: "row" }}>
@@ -49,6 +50,7 @@ export default function FormInputElement({
                 style={{ padding: 20, fontSize: 16 }}
                 placeholder={placeholder}
                 editable={editable}
+                keyboardType={type}
               />
             </View>
             <View>

@@ -9,29 +9,31 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import ModalHeader from "../../../components/HeaderModal";
 
 export default function HaircutManagement() {
-  const { handleSubmit, imageError, methods, isLoading } = useManagement();
+  const { handleSubmit, imageError, methods, isLoading, haircutId } =
+    useManagement();
   const updateImage = (img) => methods.setValue("image", img);
 
   return (
     <View style={styles.container}>
       <Spinner visible={isLoading} />
       <ModalHeader
-        title={"Editar Corte de pelo"}
+        title={`${haircutId ? "Editar" : "Nuevo"} Corte de pelo`}
         right={<Button title="Guardar" onPress={handleSubmit} />}
       />
       <View style={{ marginTop: 20 }}>
         <FormInputElement
           name={"name"}
           placeholder={"Ingresa el nombre del corte"}
-          label={"Nombre"}
+          label={"Nombre:"}
           control={methods.control}
         />
 
         <FormInputElement
           name={"price"}
           placeholder={"Ingresa el precio"}
-          label={"Precio"}
+          label={"Precio:"}
           control={methods.control}
+          type={"numeric"}
         />
       </View>
 
@@ -43,7 +45,7 @@ export default function HaircutManagement() {
           marginTop: 10,
         }}
       >
-        {"Imagen"}
+        {"Imagen:"}
       </Text>
       <ImagePicker setImage={updateImage} image={methods.watch("image")} />
 
@@ -52,31 +54,42 @@ export default function HaircutManagement() {
           <Text style={{ color: "red" }}>{"La imagen es requerida"}</Text>
         </View>
       )}
+
       <Divider />
-      <Text
+      <View
         style={{
-          fontWeight: "400",
-          fontSize: 17,
-          marginBottom: 10,
-          marginTop: 20,
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
         }}
       >
-        {"Duración"}
-      </Text>
-      <DateTimePicker
-        style={{ borderWidth: 0.3, borderColor: "grey" }}
-        is24Hour
-        value={new Date(methods.watch("duration"))}
-        onChange={(e) => methods.setValue("duration", e.nativeEvent.timestamp)}
-        mode={"countdown"}
-      />
+        <Text
+          style={{
+            fontWeight: "400",
+            fontSize: 17,
+            marginBottom: 10,
+            marginTop: 20,
+          }}
+        >
+          {"Duración:"}
+        </Text>
+        <DateTimePicker
+          style={{ width: 100 }}
+          locale="es-ES"
+          value={new Date(methods.watch("duration"))}
+          onChange={(e) =>
+            methods.setValue("duration", e.nativeEvent.timestamp)
+          }
+          minuteInterval={15}
+          mode={"time"}
+        />
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    // padding: 10,
     position: "relative",
   },
   textInput: {

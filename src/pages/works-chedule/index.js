@@ -5,6 +5,10 @@ import HeaderPage from "../../components/HeaderPage";
 import useWorkSchedule from "./useWorkSchedule";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import Spinner from "react-native-loading-spinner-overlay/lib";
+import dayjs from "dayjs";
+import { timeToUnix } from "../../utils/timeToUnix";
+import formatTime from "../../utils/formatTime";
+import { useAppContext } from "../../appProvider";
 
 export default function WorkSchedule() {
   const {
@@ -17,12 +21,13 @@ export default function WorkSchedule() {
     onSave,
     isLoading,
   } = useWorkSchedule();
+  const [{ user }] = useAppContext();
   return (
     <View>
       <HeaderPage title={"Horarios"} />
       <Spinner visible={isLoading} />
       <View style={{ alignItems: "flex-end", paddingRight: 20 }}>
-        <Button title="Guardar" onPress={onSave} />
+        {user?.isAdmin && <Button title="Guardar" onPress={onSave} />}
       </View>
       <View style={styles.body}>
         <List.Section
@@ -44,12 +49,14 @@ export default function WorkSchedule() {
             >
               {item.nonWorkIntervals.length ? (
                 item.nonWorkIntervals.map((nonWorkInterval) => (
-                  <View key={nonWorkInterval.id}>
-                    <List.Item
-                      left={(props) => (
-                        <List.Icon {...props} icon="clock-time-nine-outline" />
-                      )}
-                      right={(props) => (
+                  <List.Item
+                    style={{ marginVertical: 10 }}
+                    key={nonWorkInterval.id}
+                    left={(props) => (
+                      <List.Icon {...props} icon="clock-time-nine-outline" />
+                    )}
+                    right={(props) =>
+                      user?.isAdmin ? (
                         <Pressable
                           onPress={onDeleteWorkInterval({
                             dayId: item.id,
@@ -58,45 +65,55 @@ export default function WorkSchedule() {
                         >
                           <List.Icon {...props} icon="delete" color="red" />
                         </Pressable>
-                      )}
-                      title={`${nonWorkInterval.start} - ${nonWorkInterval.end}`}
-                    />
-                  </View>
+                      ) : (
+                        <Text></Text>
+                      )
+                    }
+                    title={`${formatTime(
+                      timeToUnix(nonWorkInterval.start)
+                    )} - ${formatTime(timeToUnix(nonWorkInterval.start))}`}
+                  />
                 ))
               ) : (
-                <List.Item title={`Este día laboramos a todas las horas`} />
+                <List.Item title={`No se labora a todas horas hoy`} />
               )}
-              <Divider style={{ borderWidth: 0.34, borderColor: "purple" }} />
-              <List.Item
-                title={
-                  <View
-                    style={{
-                      justifyContent: "flex-start",
-                      flexDirection: "row",
-                      alignItems: "center",
-                      // borderWidth: 1,
-                    }}
-                  >
-                    {/* <Text>{"Nueva Hora"}</Text> */}
-                    <DateTimePicker
-                      onChange={onDateInput({ isStart: true })}
-                      style={{ width: 60, marginLeft: 10 }}
-                      mode="time"
-                      value={dateStartInput}
-                    />
-                    <DateTimePicker
-                      onChange={onDateInput({ isStart: false })}
-                      style={{ width: 60, marginLeft: 10 }}
-                      mode="time"
-                      value={dateEndInput}
-                    />
-                    <Button
-                      title={"Agregar"}
-                      onPress={() => onAddNonWorkInterval({ dayId: item.id })}
-                    />
-                  </View>
-                }
-              />
+              {user?.isAdmin && (
+                <>
+                  <Divider
+                    style={{ borderWidth: 0.34, borderColor: "purple" }}
+                  />
+                  <List.Item
+                    title={
+                      <View
+                        style={{
+                          justifyContent: "flex-start",
+                          flexDirection: "row",
+                          alignItems: "center",
+                        }}
+                      >
+                        <DateTimePicker
+                          onChange={onDateInput({ isStart: true })}
+                          style={{ width: 60, marginLeft: 10 }}
+                          mode="time"
+                          value={dateStartInput}
+                        />
+                        <DateTimePicker
+                          onChange={onDateInput({ isStart: false })}
+                          style={{ width: 60, marginLeft: 10 }}
+                          mode="time"
+                          value={dateEndInput}
+                        />
+                        <Button
+                          title={"Agregar"}
+                          onPress={() =>
+                            onAddNonWorkInterval({ dayId: item.id })
+                          }
+                        />
+                      </View>
+                    }
+                  />
+                </>
+              )}
             </List.Accordion>
           ))}
         </List.Section>

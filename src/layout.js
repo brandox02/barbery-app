@@ -12,32 +12,7 @@ import {
 import Constants from "expo-constants";
 import React from "react";
 import { useNavigate } from "react-router-native";
-const menuItems = [
-  {
-    id: 2,
-    img: require("../assets/favicon.png"),
-    label: "Cortes De Pelo",
-    to: "/haircuts",
-  },
-  {
-    id: 3,
-    img: require("../assets/favicon.png"),
-    label: "Agendas",
-    to: "/schedules",
-  },
-  {
-    id: 4,
-    img: require("../assets/favicon.png"),
-    label: "Horarios",
-    to: "/work-schedules",
-  },
-  {
-    id: 5,
-    img: require("../assets/favicon.png"),
-    label: "Configuración",
-    to: "/settings",
-  },
-];
+import menuItems from "./menuItems";
 
 export const Layout = ({ children }) => {
   const navigate = useNavigate();
@@ -51,7 +26,7 @@ export const Layout = ({ children }) => {
         {menuItems.map(({ img, label, id, to }) => (
           <Pressable key={id} onPress={() => navigate(to)}>
             <View style={styles.menuItem}>
-              <Image source={img} style={{ height: 30, width: 30 }} onP />
+              <Image source={img} style={{ height: 30, width: 30, }} />
               <Text>{label}</Text>
             </View>
           </Pressable>
@@ -72,7 +47,6 @@ const styles = StyleSheet.create({
     width: Dimensions.get("window").width,
     position: "relative",
     height: Dimensions.get("window").height - (75 + Constants.statusBarHeight),
-    // borderWidth: 1,
     borderColor: "red",
     paddingHorizontal: 20,
   },
@@ -81,10 +55,8 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   menuContainer: {
-    // height: 80,
     flexDirection: "row",
     justifyContent: "space-around",
-    // width: Dimensions.get("window").width,
     borderTopWidth: 0.5,
     backgroundColor: "#f7f9fa",
     borderColor: "#d9d9d9",

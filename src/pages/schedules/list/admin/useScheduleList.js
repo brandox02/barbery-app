@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import {  useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-native";
 
 export default function useScheduleList() {
@@ -22,6 +22,7 @@ export default function useScheduleList() {
       setDatesSelected((datesSelected) => [...datesSelected, date]);
     }
   };
+
   return {
     visible,
     setVisible,

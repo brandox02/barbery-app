@@ -11,6 +11,7 @@ export function usePopulate({ variables = {}, graphqlQuery, onPopulate }) {
     client: apolloClient,
     fetchPolicy: "network-only",
   });
+
   const [populated, setPopulated] = useState(false);
   const navigate = useNavigate(-1);
 

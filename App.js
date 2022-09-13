@@ -14,8 +14,10 @@ import { AppProvider } from "./src/appProvider";
 import { Layout } from "./src/layout";
 import { Provider } from "react-native-paper";
 import { isProductionEnv } from "./src/utils/isProductionEnv";
+import initReactNativeCalendarConfig from "./src/reactNativeCalendarConfig";
 
 const apolloClient = makeApolloClient();
+initReactNativeCalendarConfig();
 
 export default function App() {
   function DirectlyChild() {
@@ -39,6 +41,7 @@ export default function App() {
       </Routes>
     );
   }
+
   return (
     <Provider>
       <ApolloProvider client={apolloClient}>

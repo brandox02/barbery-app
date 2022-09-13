@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useMemo } from "react";
 import { Pressable, Text, View } from "react-native";
 import { generateAvailableScheduleDates } from "../../pages/schedules/management/generateIntervals";
-import { random } from "lodash";
+import formatTime from "../../utils/formatTime";
 import { generateRandomId } from "../../utils/generateRandomId";
 
 export default function AvalibleDates({
@@ -10,15 +10,21 @@ export default function AvalibleDates({
   onSelectSchedule,
   selectedSchedule,
 }) {
-  const [avalibleTimes] = useState(
-    generateAvailableScheduleDates({
-      duration,
-      unAvaibleSchedules,
-    })
+  const avalibleTimes = useMemo(
+    () =>
+      generateAvailableScheduleDates({
+        duration,
+        unAvaibleSchedules,
+      }),
+    [duration, unAvaibleSchedules]
   );
+
   function AvalibleDateItem({ start, end }) {
     const isSelected =
-      selectedSchedule.start.isSame(start) && selectedSchedule.end.isSame(end);
+      selectedSchedule.start &&
+      selectedSchedule.end &&
+      selectedSchedule.start.isSame(start) &&
+      selectedSchedule.end.isSame(end);
 
     const onPress = () => {
       onSelectSchedule({ start, end });
@@ -35,9 +41,9 @@ export default function AvalibleDates({
             alignItems: "center",
           }}
         >
-          <Text style={{ color: "white" }}>{`${start.format(
-            "HH:mm"
-          )} - ${end.format("HH:mm")}`}</Text>
+          <Text style={{ color: "white" }}>{`${formatTime(
+            start
+          )} - ${formatTime(end)}`}</Text>
         </View>
       </Pressable>
     );

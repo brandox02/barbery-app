@@ -5,14 +5,16 @@ import { API_URL } from "@env";
 import { isProductionEnv } from "./utils/isProductionEnv";
 import { getLocalhost } from "./utils/getLocalhost";
 
-const makeApolloClient = () => {
+// export let apolloClient = null;
+
+const makeApolloClient = (token) => {
   const uri = isProductionEnv() ? API_URL : `${getLocalhost()}:5000`;
   // create an apollo link instance, a network interface for apollo client
   const link = new HttpLink({
     uri,
-    //  headers: {
-    //    Authorization: `Bearer ${token}`
-    //  }
+    headers: {
+      authorization: token || "",
+    },
   });
 
   // create an inmemory cache instance for caching graphql data
@@ -23,7 +25,7 @@ const makeApolloClient = () => {
     link,
     cache,
   });
-
+  
   return client;
 };
 
