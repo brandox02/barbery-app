@@ -61,6 +61,8 @@ export default function useToken({ apolloClient }) {
             user: { ...user, isAdmin: true },
             apolloClient,
           }));
+
+          
         })
         .catch(() => {
           Alert.alert("Error", "No se pudo iniciar sesión");
