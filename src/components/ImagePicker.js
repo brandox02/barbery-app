@@ -1,5 +1,6 @@
 import * as ImagePickerFromExpo from "expo-image-picker";
 import { Button, Image, View } from "react-native";
+import convertToBase64 from "../utils/convertToBase64";
 
 export default function ImagePicker({ setImage, image }) {
   const pickImage = async () => {
@@ -16,7 +17,7 @@ export default function ImagePicker({ setImage, image }) {
       setImage(`data:image/jpg;base64,${result.base64}`);
     }
   };
-
+  // console.log(image);
   return (
     <View
       style={{ alignItems: "center", justifyContent: "center", margin: 10 }}

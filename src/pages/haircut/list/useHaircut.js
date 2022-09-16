@@ -7,7 +7,7 @@ export const HAIRCUTS_QUERY = gql`
   query Haircuts {
     haircuts {
       id
-      # image
+      imageUrl
       name
       price
       duration

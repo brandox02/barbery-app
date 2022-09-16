@@ -28,8 +28,8 @@ const HeaderPage = ({ title }) => {
         <Image
           style={styles.profileImage}
           source={
-            user?.image
-              ? { uri: user.image }
+            user?.imageUrl
+              ? { uri: user.imageUrl }
               : require("../../assets/non-profile-image.png")
           }
         />

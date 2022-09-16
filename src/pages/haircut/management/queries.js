@@ -3,11 +3,12 @@ import gql from "graphql-tag";
 export const SAVE_MUTATION = gql`
   mutation SaveHaircut($haircut: HaircutInput!) {
     saveHaircut(haircut: $haircut) {
-      # image
       name
       price
       duration
       id
+      imageUrl
+      imageId
     }
   }
 `;
@@ -18,7 +19,7 @@ export const GET_HAIRCUT = gql`
       id
       name
       duration
-      image
+      imageUrl
       price
     }
   }

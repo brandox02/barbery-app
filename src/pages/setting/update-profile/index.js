@@ -1,18 +1,20 @@
 import React from "react";
-import { Button, View, Text } from "react-native";
+import { Button, View } from "react-native";
+import Spinner from "react-native-loading-spinner-overlay/lib";
 import FormInputElement from "../../../components/FormInputElement";
 import HeaderModal from "../../../components/HeaderModal";
 import ImagePicker from "../../../components/ImagePicker";
 import useUpdateProfile from "./useUpdateProfile";
 
 export default function UpdateProfile({ setToken }) {
-  const { methods, onUpdateProfile } = useUpdateProfile({ setToken });
+  const { methods, onUpdateProfile, loading } = useUpdateProfile({ setToken });
   return (
     <View>
       <HeaderModal
         title={"Actualizar Pefil"}
         right={<Button title={"Actualizar"} onPress={onUpdateProfile} />}
       />
+      <Spinner visible={loading} />
       <View>
         <FormInputElement
           control={methods.control}
@@ -44,8 +46,8 @@ export default function UpdateProfile({ setToken }) {
           editable={false}
         />
         <ImagePicker
-          image={methods.watch("image")}
-          setImage={(image) => methods.setValue("image", image)}
+          image={methods.watch("imageUrl")}
+          setImage={(image) => methods.setValue("imageUrl", image)}
         />
       </View>
     </View>

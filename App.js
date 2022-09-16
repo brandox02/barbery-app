@@ -21,7 +21,7 @@ initReactNativeCalendarConfig();
 
 export default function App() {
   function DirectlyChild() {
-    const [_, setToken, reloadUserInfo] = useToken();
+    const [_, setToken, reloadUserInfo] = useToken({ apolloClient });
 
     return (
       <Routes>

@@ -14,8 +14,11 @@ const UPDATE_USER_MUTATION = gql`
 `;
 
 export default function useUpdateProfile({ setToken }) {
-  const [{ user }] = useAppContext();
-  const [updateUserMutation] = useMutation(UPDATE_USER_MUTATION);
+  const [{ user, apolloClient }] = useAppContext();
+  const [updateUserMutation, { loading }] = useMutation(UPDATE_USER_MUTATION, {
+    client: apolloClient,
+  });
+
   const methods = useForm({
     defaultValues: user,
   });
@@ -31,8 +34,9 @@ export default function useUpdateProfile({ setToken }) {
         "password",
         "firstname",
         "lastname",
-        "image",
       ]);
+
+      payload.image = data.imageUrl;
 
       const response = await updateUserMutation({
         variables: { user: payload },
@@ -46,5 +50,5 @@ export default function useUpdateProfile({ setToken }) {
     })
   );
 
-  return { methods, onUpdateProfile };
+  return { methods, onUpdateProfile,loading };
 }

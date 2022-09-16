@@ -3,11 +3,16 @@ import { pick } from "lodash";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-native";
+import { useAppContext } from "../../appProvider";
 import withGraphqlErrorHandler from "../../utils/withGraphqlErrorHandler";
 import { LOGIN_BY_CREDENTIAL_MUTATION } from "./queries";
 
 export default function useLogIn({ setToken }) {
-  const [logInByCredentialMutation] = useMutation(LOGIN_BY_CREDENTIAL_MUTATION);
+  const [{ apolloClient }] = useAppContext();
+  const [logInByCredentialMutation] = useMutation(
+    LOGIN_BY_CREDENTIAL_MUTATION,
+    { client: apolloClient }
+  );
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 

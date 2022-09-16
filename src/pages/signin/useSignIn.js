@@ -24,7 +24,10 @@ const defaultValues = {
 };
 
 export default function useSignIn({ setToken }) {
-  const [signInMutation] = useMutation(SIGN_IN_MUTATION);
+  const [{ apolloClient }] = useAppContext();
+  const [signInMutation] = useMutation(SIGN_IN_MUTATION, {
+    client: apolloClient,
+  });
   const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();

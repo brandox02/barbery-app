@@ -9,6 +9,8 @@ import { usePopulate } from "../../../hooks/usePopulate";
 import { GET_HAIRCUT, SAVE_MUTATION } from "./queries";
 import { timeToUnix } from "../../../utils/timeToUnix";
 import { unixToTime } from "../../../utils/unixToTime";
+import convertToBase64 from "../../../utils/convertToBase64";
+import { useAppContext } from "../../../appProvider";
 
 export default function useManagement() {
   const methods = useForm({
@@ -19,7 +21,8 @@ export default function useManagement() {
       price: null,
     },
   });
-  const [saveMutation] = useMutation(SAVE_MUTATION);
+  const [{ apolloClient }] = useAppContext();
+  const [saveMutation] = useMutation(SAVE_MUTATION, { client: apolloClient });
   const [imageError, setImageError] = useState(false);
   const navigate = useNavigate();
   const { haircutId } = useParams();
@@ -35,11 +38,12 @@ export default function useManagement() {
             "id",
             "name",
             "duration",
-            "image",
             "price",
           ]);
           payload.price = payload.price.toString();
           payload.duration = timeToUnix(payload.duration);
+          if (data?.haircut.imageUrl)
+            payload.image = await convertToBase64(data?.haircut.imageUrl);
 
           methods.reset(payload);
         } else {
@@ -74,8 +78,15 @@ export default function useManagement() {
         const payload = pick(data, ["image", "name", "price", "duration"]);
         payload.price = parseInt(payload.price);
         payload.duration = unixToTime(payload.duration);
+
         if (haircutId) payload.id = parseInt(haircutId);
-        await saveMutation({ variables: { haircut: payload } });
+        // console.log({ payload });
+
+        await saveMutation({
+          variables: {
+            haircut: payload,
+          },
+        });
 
         setIsLoading(false);
         Alert.alert(

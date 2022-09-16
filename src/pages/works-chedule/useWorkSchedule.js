@@ -1,8 +1,11 @@
 import { useMutation } from "@apollo/react-hooks";
+
 import dayjs from "dayjs";
 import { pick } from "lodash";
 import { useReducer } from "react";
+
 import { Alert } from "react-native";
+import { useAppContext } from "../../appProvider";
 import { usePopulate } from "../../hooks/usePopulate";
 import { generateRandomId } from "../../utils/generateRandomId";
 import withGraphqlErrorHandler from "../../utils/withGraphqlErrorHandler";
@@ -17,8 +20,10 @@ import {
 } from "./reducer";
 
 export default function useWorkSchedule() {
+  const [{ apolloClient }] = useAppContext();
   const [saveWorkScheduleDaysMutation, { loading }] = useMutation(
-    SAVE_WORK_SCHEDULE_DAYS
+    SAVE_WORK_SCHEDULE_DAYS,
+    { client: apolloClient }
   );
   const [{ items, dateEndInput, dateStartInput }, dispatch] = useReducer(
     reducer,

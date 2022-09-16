@@ -13,7 +13,7 @@ function Card({ haircut }) {
   if (!haircut) {
     return <></>;
   }
-  const { name, price, image, duration } = haircut;
+  const { name, price, imageUrl, duration } = haircut;
   return (
     <View
       style={{
@@ -43,7 +43,11 @@ function Card({ haircut }) {
       </View>
       <View>
         <Image
-          source={require("../../../assets/haircut-1.webp")}
+          source={
+            imageUrl
+              ? { uri: imageUrl }
+              : require("../../../assets/haircut-1.webp")
+          }
           style={{ height: 70, width: 70, borderRadius: 10 }}
         />
       </View>
@@ -85,13 +89,13 @@ export default function HaircutPicker({ haircut, setHaircut }) {
           </Text>
           <ScrollView style={{ marginBottom: 120 }}>
             {haircuts.map((haircut) => {
-              const { image, name, price, duration, id } = haircut;
+              const { imageUrl, name, price, duration, id } = haircut;
               return (
                 <View key={id}>
                   <HaircutCard
                     key={id}
                     duration={duration}
-                    image={image}
+                    image={imageUrl}
                     price={price}
                     title={name}
                     onSelectHaircut={() => {

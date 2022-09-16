@@ -25,11 +25,11 @@ export default function Haircut() {
       </View>
       <View style={{}}>
         {haircuts.length ? (
-          haircuts.map(({ image, name, price, duration, id }) => (
+          haircuts.map(({ imageUrl, name, price, duration, id }) => (
             <Card
               key={id}
               duration={duration}
-              image={image}
+              image={imageUrl}
               price={price}
               title={name}
               onEdit={() => goToUpdate(id)}
