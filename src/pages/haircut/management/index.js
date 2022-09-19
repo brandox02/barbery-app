@@ -5,8 +5,13 @@ import Spinner from "../../../components/Spinner";
 import ImagePicker from "../../../components/ImagePicker";
 import useManagement from "./useManagement";
 import { Divider } from "react-native-paper";
-import DateTimePicker from "@react-native-community/datetimepicker";
 import ModalHeader from "../../../components/HeaderModal";
+import {
+  DateTimePickerAndroid,
+  DateTimePicker,
+} from "@react-native-community/datetimepicker";
+import { Switch } from "../../../components/ConditionalComponents";
+import DurationPicker from "../../../components/DurationPicker";
 
 export default function HaircutManagement() {
   const { handleSubmit, imageError, methods, isLoading, haircutId } =
@@ -20,6 +25,7 @@ export default function HaircutManagement() {
         title={`${haircutId ? "Editar" : "Nuevo"} Corte de pelo`}
         right={<Button title="Guardar" onPress={handleSubmit} />}
       />
+
       <View style={{ marginTop: 20 }}>
         <FormInputElement
           name={"name"}
@@ -56,34 +62,23 @@ export default function HaircutManagement() {
       )}
 
       <Divider />
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        <Text
-          style={{
-            fontWeight: "400",
-            fontSize: 17,
-            marginBottom: 10,
-            marginTop: 20,
-          }}
-        >
-          {"Duración:"}
-        </Text>
-        <DateTimePicker
-          style={{ width: 100 }}
-          locale="es-ES"
-          value={new Date(methods.watch("duration"))}
-          onChange={(e) =>
-            methods.setValue("duration", e.nativeEvent.timestamp)
-          }
-          minuteInterval={15}
-          mode={"time"}
-        />
-      </View>
+
+      <DurationPicker
+        date={methods.watch("duration")}
+        setDate={(date) => methods.setValue("duration", date)}
+        label={
+          <Text
+            style={{
+              fontWeight: "400",
+              fontSize: 17,
+              marginBottom: 10,
+              marginTop: 20,
+            }}
+          >
+            {"Duración:"}
+          </Text>
+        }
+      />
     </View>
   );
 }

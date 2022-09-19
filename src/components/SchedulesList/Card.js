@@ -37,7 +37,11 @@ export default function Card({ schedule, user }) {
       </View>
       <View>
         <Image
-          source={require("../../../assets/haircut-1.webp")}
+          source={
+            schedule.haircut.imageUrl
+              ? { uri: schedule.haircut.imageUrl }
+              : require("../../../assets/haircut-1.webp")
+          }
           style={{ height: 70, width: 70, borderRadius: 10 }}
         />
       </View>

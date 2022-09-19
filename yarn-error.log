@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/bin/node /usr/share/yarn/bin/yarn.js add @types/react-native-image-base64
+  /usr/bin/node /usr/share/yarn/bin/yarn.js add @types/react-native-picker-select
 
 PATH: 
   /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin
@@ -14,7 +14,7 @@ Platform:
   linux x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@types%2freact-native-image-base64: Not found
+  Error: https://registry.yarnpkg.com/@types%2freact-native-picker-select: Not found
       at Request.params.callback [as _callback] (/usr/share/yarn/lib/cli.js:66145:18)
       at Request.self.callback (/usr/share/yarn/lib/cli.js:140890:22)
       at Request.emit (node:events:513:28)
@@ -61,7 +61,6 @@ npm manifest:
       "react-native-calendars": "^1.1288.2",
       "react-native-dotenv": "^3.3.1",
       "react-native-fs": "^2.20.0",
-      "react-native-image-base64": "^0.1.4",
       "react-native-loading-spinner-overlay": "^3.0.1",
       "react-native-paper": "^4.12.4",
       "react-native-safe-area-context": "4.3.1",
@@ -5828,11 +5827,6 @@ Lockfile:
     version "0.0.7"
     resolved "https://registry.yarnpkg.com/react-native-gradle-plugin/-/react-native-gradle-plugin-0.0.7.tgz#96602f909745239deab7b589443f14fce5da2056"
     integrity sha512-+4JpbIx42zGTONhBTIXSyfyHICHC29VTvhkkoUOJAh/XHPEixpuBduYgf6Y4y9wsN1ARlQhBBoptTvXvAFQf5g==
-  
-  react-native-image-base64@^0.1.4:
-    version "0.1.4"
-    resolved "https://registry.yarnpkg.com/react-native-image-base64/-/react-native-image-base64-0.1.4.tgz#0a4687740de9b04df63e649c5946fc646bc0f4e9"
-    integrity sha512-WLdzwHdXFRLS9VStG1CG46+t+fcInjVWxKd1+AATElBhaAS3zwDHz7mYIZS1OX4VMuNClwl5G8dowuqUJ9aMGQ==
   
   react-native-iphone-x-helper@^1.3.1:
     version "1.3.1"

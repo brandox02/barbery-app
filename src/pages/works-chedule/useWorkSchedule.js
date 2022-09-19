@@ -17,6 +17,8 @@ import {
   ON_CHANGE_TIME_INPUT,
   RESET_NON_WORK_INTERVAL,
   initialState,
+  ON_CHANGE_DAY_SELECTED,
+  ON_CHANGE_VISIBLE,
 } from "./reducer";
 
 export default function useWorkSchedule() {
@@ -25,10 +27,8 @@ export default function useWorkSchedule() {
     SAVE_WORK_SCHEDULE_DAYS,
     { client: apolloClient }
   );
-  const [{ items, dateEndInput, dateStartInput }, dispatch] = useReducer(
-    reducer,
-    initialState
-  );
+  const [{ items, dateEndInput, dateStartInput, dayId, visible }, dispatch] =
+    useReducer(reducer, initialState);
 
   const { populated } = usePopulate({
     variables: {},
@@ -43,14 +43,18 @@ export default function useWorkSchedule() {
 
   const onDateInput =
     ({ isStart }) =>
-    (_, date) => {
+    (date) => {
       dispatch({
         type: ON_CHANGE_TIME_INPUT,
         payload: { isStart, value: date },
       });
     };
 
-  const onAddNonWorkInterval = ({ dayId }) => {
+  const toggleModal = () => {
+    dispatch({ type: ON_CHANGE_VISIBLE, payload: { value: !visible } });
+  };
+
+  const onAddNonWorkInterval = () => {
     dispatch({
       type: ADD_NON_WORK_INTERVAL,
       payload: {
@@ -62,6 +66,7 @@ export default function useWorkSchedule() {
         dayId,
       },
     });
+    toggleModal();
   };
 
   const onDeleteWorkInterval =
@@ -71,6 +76,11 @@ export default function useWorkSchedule() {
         type: DELETE_NON_WORK_INTERVAL,
         payload: { dayId, nonWorkIntervalId },
       });
+
+  const onOpenModal = (dayId) => {
+    dispatch({ type: ON_CHANGE_DAY_SELECTED, payload: { value: dayId } });
+    toggleModal();
+  };
 
   const onSave = withGraphqlErrorHandler(async () => {
     await saveWorkScheduleDaysMutation({
@@ -96,5 +106,9 @@ export default function useWorkSchedule() {
     onDeleteWorkInterval,
     onSave,
     isLoading: !populated || loading,
+    onOpenModal,
+    dayId,
+    toggleModal,
+    visible,
   };
 }

@@ -58,7 +58,7 @@ export default function useToken({ apolloClient }) {
           const apolloClient = makeApolloClient(token);
           setAppState((state) => ({
             ...state,
-            user: { ...user, isAdmin: true },
+            user,
             apolloClient,
           }));
 

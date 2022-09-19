@@ -1,7 +1,8 @@
-import { useApolloClient } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/react-hooks";
 import dayjs from "dayjs";
 import gql from "graphql-tag";
 import { useEffect, useState } from "react";
+import { useQuery } from "react-apollo";
 import { Alert } from "react-native";
 import { useNavigate } from "react-router-native";
 import { useAppContext } from "../../../appProvider";
@@ -41,10 +42,24 @@ export default function useManagement() {
     end: null,
   });
   const [date, setDate] = useState(dayjs());
-  const [busyDates, setBusyDates] = useState([]);
-  const client = useApolloClient();
-  const [{ user }] = useAppContext();
+  const [{ user, apolloClient }] = useAppContext();
   const navigate = useNavigate();
+  const [saveScheduleMutation, { loading: loadingMutation }] = useMutation(
+    SAVE_SCHEDULE,
+    {
+      client: apolloClient,
+    }
+  );
+
+  const { data } = useQuery(SCHEDULES_PER_DAY, {
+    client: apolloClient,
+    variables: { where: { date: date.format("YYYY-MM-DD") } },
+    fetchPolicy: "network-only",
+  });
+
+  useEffect(() => {
+    setSelectedScheduleDate({ start: null, end: null });
+  }, [data]);
 
   const onSubmit = withGraphqlErrorHandler(async () => {
     if (!haircut) {
@@ -71,34 +86,12 @@ export default function useManagement() {
       },
     };
 
-    await client.mutate({
-      mutation: SAVE_SCHEDULE,
-      variables: payload,
-    });
+    await saveScheduleMutation({ variables: payload });
 
     Alert.alert("Cita agendada exitosamente");
 
     navigate(-1);
   });
-
-  useEffect(() => {
-    async function fn() {
-      try {
-        const {
-          data: { schedulesPerDay },
-        } = await client.query({
-          query: SCHEDULES_PER_DAY,
-          variables: { where: { date: date.format("YYYY-MM-DD") } },
-          fetchPolicy: 'network-only'
-        });
-
-        setBusyDates(schedulesPerDay);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    if (date) fn();
-  }, [date]);
 
   return {
     haircut,
@@ -108,6 +101,7 @@ export default function useManagement() {
     selectedScheduleDate,
     setSelectedScheduleDate,
     onSubmit,
-    busyDates,
+    busyDates: data?.schedulesPerDay || [],
+    loading: loadingMutation,
   };
 }

@@ -5,10 +5,10 @@ import HeaderPage from "../../components/HeaderPage";
 import useWorkSchedule from "./useWorkSchedule";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import Spinner from "react-native-loading-spinner-overlay/lib";
-import dayjs from "dayjs";
 import { timeToUnix } from "../../utils/timeToUnix";
 import formatTime from "../../utils/formatTime";
 import { useAppContext } from "../../appProvider";
+import AddModal from "./AddModal";
 
 export default function WorkSchedule() {
   const {
@@ -20,27 +20,32 @@ export default function WorkSchedule() {
     onDeleteWorkInterval,
     onSave,
     isLoading,
+    onOpenModal,
+    toggleModal,
+    visible,
   } = useWorkSchedule();
   const [{ user }] = useAppContext();
   return (
     <View>
       <HeaderPage title={"Horarios"} />
       <Spinner visible={isLoading} />
-      <View style={{ alignItems: "flex-end", paddingRight: 20 }}>
+      <AddModal
+        visible={visible}
+        dateEndInput={dateEndInput}
+        dateStartInput={dateStartInput}
+        onDateInput={onDateInput}
+        onSave={onSave}
+        onAddNonWorkInterval={onAddNonWorkInterval}
+        handleClose={toggleModal}
+      />
+      <View
+        style={{ alignItems: "flex-end", paddingRight: 20, paddingTop: 20 }}
+      >
         {user?.isAdmin && <Button title="Guardar" onPress={onSave} />}
       </View>
       <View style={styles.body}>
-        <List.Section
-          title={
-            <View>
-              <Text style={{ fontWeight: "500" }}>
-                {
-                  "A continuación estan los días y horas en las que no laboramos"
-                }
-              </Text>
-            </View>
-          }
-        >
+        <Text style={{marginTop: 10}}>A continuacion estan los dias y horas en las que no laboramos:</Text>
+        <List.Section>
           {items.map((item) => (
             <List.Accordion
               key={item.id}
@@ -71,11 +76,11 @@ export default function WorkSchedule() {
                     }
                     title={`${formatTime(
                       timeToUnix(nonWorkInterval.start)
-                    )} - ${formatTime(timeToUnix(nonWorkInterval.start))}`}
+                    )} - ${formatTime(timeToUnix(nonWorkInterval.end))}`}
                   />
                 ))
               ) : (
-                <List.Item title={`No se labora a todas horas hoy`} />
+                <List.Item title={`Abierto a toda hora`} />
               )}
               {user?.isAdmin && (
                 <>
@@ -91,23 +96,9 @@ export default function WorkSchedule() {
                           alignItems: "center",
                         }}
                       >
-                        <DateTimePicker
-                          onChange={onDateInput({ isStart: true })}
-                          style={{ width: 60, marginLeft: 10 }}
-                          mode="time"
-                          value={dateStartInput}
-                        />
-                        <DateTimePicker
-                          onChange={onDateInput({ isStart: false })}
-                          style={{ width: 60, marginLeft: 10 }}
-                          mode="time"
-                          value={dateEndInput}
-                        />
                         <Button
                           title={"Agregar"}
-                          onPress={() =>
-                            onAddNonWorkInterval({ dayId: item.id })
-                          }
+                          onPress={() => onOpenModal(item.id)}
                         />
                       </View>
                     }
@@ -124,6 +115,6 @@ export default function WorkSchedule() {
 
 const styles = StyleSheet.create({
   body: {
-    padding: 20,
+    
   },
 });

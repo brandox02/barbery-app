@@ -27,6 +27,7 @@ export default function useManagement() {
   const navigate = useNavigate();
   const { haircutId } = useParams();
   const [isLoading, setIsLoading] = useState(false);
+  
 
   const { populated } = usePopulate({
     graphqlQuery: GET_HAIRCUT,

@@ -20,7 +20,6 @@ export default function HaircutCard({
         }}
       >
         <Text style={styles.title}>{title}</Text>
-        <Button title="Seleccionar" onPress={onSelectHaircut} />
       </View>
 
       <View style={styles.card}>
@@ -71,6 +70,9 @@ export default function HaircutCard({
           </View>
         </View>
       </View>
+      <View style={{ marginTop: 20 }}>
+        <Button title="Seleccionar" onPress={onSelectHaircut} />
+      </View>
     </View>
   );
 }
@@ -87,10 +89,7 @@ const styles = StyleSheet.create({
   },
   card: {
     position: "relative",
-    // justifyContent: "center",
     display: "flex",
-    // borderWidth: 1,
-
     alignItems: "center",
   },
   image: {
@@ -102,6 +101,7 @@ const styles = StyleSheet.create({
     marginTop: -12,
     fontSize: 20,
     fontWeight: "500",
+    padding: 20,
   },
   price: {
     marginTop: 15,

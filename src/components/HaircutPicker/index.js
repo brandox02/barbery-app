@@ -27,7 +27,7 @@ function Card({ haircut }) {
         borderColor: "grey",
       }}
     >
-      <View style={{ justifyContent: "space-around" }}>
+      <View style={{ justifyContent: "space-around", width: "75%" }}>
         <Text style={{ fontWeight: "600", fontSize: 16 }}>{name}</Text>
         <NumberFormat
           displayType={"text"}
@@ -41,7 +41,7 @@ function Card({ haircut }) {
           {`Duración de ${dayjs(timeToUnix(duration)).format("HH:mm")}`}
         </Text>
       </View>
-      <View>
+      <View style={{ width: "25%" }}>
         <Image
           source={
             imageUrl

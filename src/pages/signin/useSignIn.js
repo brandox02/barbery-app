@@ -5,6 +5,7 @@ import withGraphqlErrorHandler from "../../utils/withGraphqlErrorHandler";
 import { useNavigate } from "react-router-native";
 import { useMutation } from "@apollo/react-hooks";
 import { useState } from "react";
+import { useAppContext } from "../../appProvider";
 
 const SIGN_IN_MUTATION = gql`
   mutation SignIn($user: SignInInput!) {

@@ -21,10 +21,7 @@ export default function UserList({ user }) {
       >
         <Button title={"Agendar Cita"} onPress={goToManagement} />
       </View>
-      <View>
-        <Divider />
-        <SchedulesList where={{ userId: user.id }} hideUserLabel/>
-      </View>
+      <SchedulesList where={{ userId: user.id }} hideUserLabel/>
     </View>
   );
 }
