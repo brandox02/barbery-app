@@ -6,11 +6,6 @@ import ImagePicker from "../../../components/ImagePicker";
 import useManagement from "./useManagement";
 import { Divider } from "react-native-paper";
 import ModalHeader from "../../../components/HeaderModal";
-import {
-  DateTimePickerAndroid,
-  DateTimePicker,
-} from "@react-native-community/datetimepicker";
-import { Switch } from "../../../components/ConditionalComponents";
 import DurationPicker from "../../../components/DurationPicker";
 
 export default function HaircutManagement() {

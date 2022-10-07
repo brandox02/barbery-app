@@ -19,7 +19,7 @@ export default function CardMenu({ onEdit, onDelete }) {
         anchor={
           <Pressable onPress={() => setVisible(true)}>
             <Image
-              source={require("../../../../../assets/menu.png")}
+              source={require("../../../../assets/menu.png")}
               style={{
                 width: 40,
                 height: 40,
@@ -31,7 +31,7 @@ export default function CardMenu({ onEdit, onDelete }) {
         }
       >
         <Menu.Item
-          icon={require("../../../../../assets/edit-icon.png")}
+          icon={require("../../../../assets/edit-icon.png")}
           onPress={surround(onEdit)}
           title="Editar"
         />
@@ -39,7 +39,7 @@ export default function CardMenu({ onEdit, onDelete }) {
         <Menu.Item
           onPress={surround(onDelete)}
           title="Borrar"
-          icon={require("../../../../../assets/delete-icon.png")}
+          icon={require("../../../../assets/delete-icon.png")}
         />
       </Menu>
     </View>

@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { Image, View } from "react-native";
+import { Button, Image, View } from "react-native";
 import { Text } from "react-native-paper";
 import addTime from "../../utils/addTime";
 
@@ -17,8 +17,6 @@ export default function Card({ schedule, user }) {
   return (
     <View
       style={{
-        flexDirection: "row",
-        justifyContent: "space-between",
         padding: 20,
         marginVertical: 20,
         backgroundColor: "#F9FAFB",
@@ -27,23 +25,34 @@ export default function Card({ schedule, user }) {
         borderColor: "grey",
       }}
     >
-      <View style={{ justifyContent: "space-around" }}>
-        <Text style={{ fontWeight: "600", fontSize: 16 }}>{dateLabel}</Text>
-        <Text style={{ fontWeight: "600", fontSize: 14, fontWeight: "500" }}>
-          {timeLabel}
-        </Text>
-        {user && <Text>{`${user.firstname} ${user.lastname}`}</Text>}
-        <Text style={{ fontWeight: "200" }}>{schedule.haircut.name}</Text>
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+          marginBottom: 20
+        }}
+      >
+        <View style={{ justifyContent: "space-around" }}>
+          <Text style={{ fontWeight: "600", fontSize: 16 }}>{dateLabel}</Text>
+          <Text style={{ fontWeight: "600", fontSize: 14, fontWeight: "500" }}>
+            {timeLabel}
+          </Text>
+          {user && <Text>{`${user.firstname} ${user.lastname}`}</Text>}
+          <Text style={{ fontWeight: "200" }}>{schedule.haircut.name}</Text>
+        </View>
+        <View>
+          <Image
+            source={
+              schedule.haircut.imageUrl
+                ? { uri: schedule.haircut.imageUrl }
+                : require("../../../assets/haircut-1.webp")
+            }
+            style={{ height: 70, width: 70, borderRadius: 10 }}
+          />
+        </View>
       </View>
       <View>
-        <Image
-          source={
-            schedule.haircut.imageUrl
-              ? { uri: schedule.haircut.imageUrl }
-              : require("../../../assets/haircut-1.webp")
-          }
-          style={{ height: 70, width: 70, borderRadius: 10 }}
-        />
+        <Button title={"Cancelar Cita"} color={'red'}/>
       </View>
     </View>
   );

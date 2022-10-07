@@ -1,10 +1,11 @@
 import * as React from "react";
 import { Button, Text, View } from "react-native";
-import Card from "./card";
+import HaircutCard from "../../../components/HaircutCard";
 import HeaderPage from "../../../components/HeaderPage";
 import useHaircut from "./useHaircut";
 import Spinner from "../../../components/Spinner";
 import { useAppContext } from "../../../appProvider";
+import CardMenu from "./Menu";
 
 export default function Haircut() {
   const { haircuts, goToCreate, goToUpdate, loading } = useHaircut();
@@ -26,7 +27,7 @@ export default function Haircut() {
       <View style={{}}>
         {haircuts.length ? (
           haircuts.map(({ imageUrl, name, price, duration, id }) => (
-            <Card
+            <HaircutCard
               key={id}
               duration={duration}
               image={imageUrl}
@@ -34,7 +35,21 @@ export default function Haircut() {
               title={name}
               onEdit={() => goToUpdate(id)}
               onDelete={() => {}}
-            />
+            >
+              <HaircutCard.CardHeader
+                title={"Header del card"}
+                right={
+                  user?.isAdmin && (
+                    <CardMenu
+                      onDelete={() => {}}
+                      onEdit={() => goToUpdate(id)}
+                    />
+                  )
+                }
+              />
+              <HaircutCard.CardImage image={imageUrl} />
+              <HaircutCard.CardDetail duration={duration} price={price} />
+            </HaircutCard>
           ))
         ) : (
           <View style={{ alignItems: "center" }}>

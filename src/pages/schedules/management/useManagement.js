@@ -1,7 +1,7 @@
 import { useMutation } from "@apollo/react-hooks";
 import dayjs from "dayjs";
 import gql from "graphql-tag";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useQuery } from "react-apollo";
 import { Alert } from "react-native";
 import { useNavigate } from "react-router-native";
@@ -93,6 +93,11 @@ export default function useManagement() {
     navigate(-1);
   });
 
+  const busyDates = useMemo(
+    () => data?.schedulesPerDay || [],
+    [data?.schedulesPerDay]
+  );
+
   return {
     haircut,
     setHaircut,
@@ -101,7 +106,7 @@ export default function useManagement() {
     selectedScheduleDate,
     setSelectedScheduleDate,
     onSubmit,
-    busyDates: data?.schedulesPerDay || [],
+    busyDates,
     loading: loadingMutation,
   };
 }

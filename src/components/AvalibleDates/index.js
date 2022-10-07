@@ -52,9 +52,17 @@ export default function AvalibleDates({
   return (
     <View style={{ marginTop: 30 }}>
       <Text style={{ fontSize: 17 }}>Horarios Disponibles</Text>
-      {avalibleTimes.map(({ start, end }) => (
-        <AvalibleDateItem key={generateRandomId()} start={start} end={end} />
-      ))}
+      {avalibleTimes.map(({ start, end }, i) => {
+        return (
+          true && (
+            <AvalibleDateItem
+              key={generateRandomId()}
+              start={start}
+              end={end}
+            />
+          )
+        );
+      })}
     </View>
   );
 }
