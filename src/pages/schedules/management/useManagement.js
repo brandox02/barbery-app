@@ -51,7 +51,7 @@ export default function useManagement() {
     }
   );
 
-  const { data } = useQuery(SCHEDULES_PER_DAY, {
+  const { data, error } = useQuery(SCHEDULES_PER_DAY, {
     client: apolloClient,
     variables: { where: { date: date.format("YYYY-MM-DD") } },
     fetchPolicy: "network-only",
@@ -108,5 +108,7 @@ export default function useManagement() {
     onSubmit,
     busyDates,
     loading: loadingMutation,
+    error,
+    navigate,
   };
 }

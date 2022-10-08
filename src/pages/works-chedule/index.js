@@ -16,7 +16,7 @@ export default function WorkSchedule() {
     dateStartInput,
     items,
     onDateInput,
-    onAddNonWorkInterval,
+    onAddWorkInterval,
     onDeleteWorkInterval,
     onSave,
     isLoading,
@@ -35,7 +35,7 @@ export default function WorkSchedule() {
         dateStartInput={dateStartInput}
         onDateInput={onDateInput}
         onSave={onSave}
-        onAddNonWorkInterval={onAddNonWorkInterval}
+        onAddWorkInterval={onAddWorkInterval}
         handleClose={toggleModal}
       />
       <View
@@ -44,7 +44,9 @@ export default function WorkSchedule() {
         {user?.isAdmin && <Button title="Guardar" onPress={onSave} />}
       </View>
       <View style={styles.body}>
-        <Text style={{marginTop: 10}}>A continuacion estan los dias y horas en las que no laboramos:</Text>
+        <Text style={{ marginTop: 10 }}>
+          A continuacion estan los dias y horas en las que laboramos:
+        </Text>
         <List.Section>
           {items.map((item) => (
             <List.Accordion
@@ -52,11 +54,11 @@ export default function WorkSchedule() {
               title={item.day}
               left={(props) => <List.Icon {...props} icon="briefcase" />}
             >
-              {item.nonWorkIntervals.length ? (
-                item.nonWorkIntervals.map((nonWorkInterval) => (
+              {item.workIntervals.length ? (
+                item.workIntervals.map((workInterval) => (
                   <List.Item
                     style={{ marginVertical: 10 }}
-                    key={nonWorkInterval.id}
+                    key={workInterval.id}
                     left={(props) => (
                       <List.Icon {...props} icon="clock-time-nine-outline" />
                     )}
@@ -65,7 +67,7 @@ export default function WorkSchedule() {
                         <Pressable
                           onPress={onDeleteWorkInterval({
                             dayId: item.id,
-                            nonWorkIntervalId: nonWorkInterval.id,
+                            workIntervalId: workInterval.id,
                           })}
                         >
                           <List.Icon {...props} icon="delete" color="red" />
@@ -75,12 +77,12 @@ export default function WorkSchedule() {
                       )
                     }
                     title={`${formatTime(
-                      timeToUnix(nonWorkInterval.start)
-                    )} - ${formatTime(timeToUnix(nonWorkInterval.end))}`}
+                      timeToUnix(workInterval.start)
+                    )} - ${formatTime(timeToUnix(workInterval.end))}`}
                   />
                 ))
               ) : (
-                <List.Item title={`Abierto a toda hora`} />
+                <List.Item title={`En este día no laboramos`} />
               )}
               {user?.isAdmin && (
                 <>
@@ -114,7 +116,5 @@ export default function WorkSchedule() {
 }
 
 const styles = StyleSheet.create({
-  body: {
-    
-  },
+  body: {},
 });

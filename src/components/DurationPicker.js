@@ -43,7 +43,11 @@ export default function DurationPicker({
               limit: hourConfig.limit,
               step: hourConfig.step,
             }).map((f) => (
-              <Picker.Item label={f.toString()} value={f.toString()} />
+              <Picker.Item
+                key={Math.random() * 10000}
+                label={f.toString()}
+                value={f.toString()}
+              />
             ))}
           </Picker>
         </View>
@@ -57,7 +61,11 @@ export default function DurationPicker({
               limit: minuteConfig.limit,
               step: minuteConfig.step,
             }).map((f) => (
-              <Picker.Item key={Math.random() * 10000} label={f.toString()} value={f.toString()} />
+              <Picker.Item
+                key={Math.random() * 10000}
+                label={f.toString()}
+                value={f.toString()}
+              />
             ))}
           </Picker>
         </View>

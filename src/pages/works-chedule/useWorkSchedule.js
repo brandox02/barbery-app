@@ -12,10 +12,10 @@ import withGraphqlErrorHandler from "../../utils/withGraphqlErrorHandler";
 import { GET_WORK_SCHEDULES, SAVE_WORK_SCHEDULE_DAYS } from "./queries";
 import {
   reducer,
-  ADD_NON_WORK_INTERVAL,
-  DELETE_NON_WORK_INTERVAL,
+  ADD_WORK_INTERVAL,
+  DELETE_WORK_INTERVAL,
   ON_CHANGE_TIME_INPUT,
-  RESET_NON_WORK_INTERVAL,
+  RESET_WORK_INTERVAL,
   initialState,
   ON_CHANGE_DAY_SELECTED,
   ON_CHANGE_VISIBLE,
@@ -30,12 +30,12 @@ export default function useWorkSchedule() {
   const [{ items, dateEndInput, dateStartInput, dayId, visible }, dispatch] =
     useReducer(reducer, initialState);
 
-  const { populated } = usePopulate({
+  usePopulate({
     variables: {},
     graphqlQuery: GET_WORK_SCHEDULES,
     onPopulate: async (data) => {
       dispatch({
-        type: RESET_NON_WORK_INTERVAL,
+        type: RESET_WORK_INTERVAL,
         payload: { value: data.workScheduleDays },
       });
     },
@@ -54,9 +54,9 @@ export default function useWorkSchedule() {
     dispatch({ type: ON_CHANGE_VISIBLE, payload: { value: !visible } });
   };
 
-  const onAddNonWorkInterval = () => {
+  const onAddWorkInterval = () => {
     dispatch({
-      type: ADD_NON_WORK_INTERVAL,
+      type: ADD_WORK_INTERVAL,
       payload: {
         value: {
           start: dayjs(dateStartInput).format("HH:mm:ss"),
@@ -70,11 +70,11 @@ export default function useWorkSchedule() {
   };
 
   const onDeleteWorkInterval =
-    ({ dayId, nonWorkIntervalId }) =>
+    ({ dayId, workIntervalId }) =>
     () =>
       dispatch({
-        type: DELETE_NON_WORK_INTERVAL,
-        payload: { dayId, nonWorkIntervalId },
+        type: DELETE_WORK_INTERVAL,
+        payload: { dayId, workIntervalId },
       });
 
   const onOpenModal = (dayId) => {
@@ -87,7 +87,7 @@ export default function useWorkSchedule() {
       variables: {
         workScheduleDays: items.map((item) => ({
           id: item.id,
-          nonWorkIntervals: item.nonWorkIntervals.map((x) =>
+          workIntervals: item.workIntervals.map((x) =>
             pick(x, ["start", "end"])
           ),
         })),
@@ -102,10 +102,10 @@ export default function useWorkSchedule() {
     dateEndInput,
     dateStartInput,
     onDateInput,
-    onAddNonWorkInterval,
+    onAddWorkInterval,
     onDeleteWorkInterval,
     onSave,
-    isLoading: !populated || loading,
+    isLoading: loading,
     onOpenModal,
     dayId,
     toggleModal,

@@ -27,9 +27,8 @@ export default function useManagement() {
   const navigate = useNavigate();
   const { haircutId } = useParams();
   const [isLoading, setIsLoading] = useState(false);
-  
 
-  const { populated } = usePopulate({
+  usePopulate({
     graphqlQuery: GET_HAIRCUT,
     variables: { where: { id: parseInt(haircutId) } },
     onPopulate: async (data) => {
@@ -105,6 +104,6 @@ export default function useManagement() {
     methods,
     haircutId,
     goToBack,
-    isLoading: isLoading || !populated,
+    isLoading: isLoading,
   };
 }

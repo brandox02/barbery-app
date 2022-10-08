@@ -1,16 +1,16 @@
 import { timeToUnix } from "../../utils/timeToUnix";
 
-export const ADD_NON_WORK_INTERVAL = "ADD_NON_WORK_INTERVAL";
-export const DELETE_NON_WORK_INTERVAL = "DELETE_NON_WORK_INTERVAL";
-export const RESET_NON_WORK_INTERVAL = "RESET_NON_WORK_INTERVAL";
+export const ADD_WORK_INTERVAL = "ADD_WORK_INTERVAL";
+export const DELETE_WORK_INTERVAL = "DELETE_WORK_INTERVAL";
+export const RESET_WORK_INTERVAL = "RESET_WORK_INTERVAL";
 export const ON_CHANGE_TIME_INPUT = "ON_CHANGE_TIME_INPUT";
 export const ON_CHANGE_DAY_SELECTED = "ON_CHANGE_DAY_SELECTED";
 export const ON_CHANGE_VISIBLE = "ON_CHANGE_VISIBLE";
 
 export const initialState = {
   items: [],
-  dateEndInput: timeToUnix('00:00:00'),
-  dateStartInput: timeToUnix('00:00:00'),
+  dateEndInput: timeToUnix("00:00:00"),
+  dateStartInput: timeToUnix("00:00:00"),
   dayId: null,
   visible: false,
 };
@@ -19,13 +19,13 @@ export function reducer(state, { type, payload }) {
   const newState = { ...state };
 
   switch (type) {
-    case ADD_NON_WORK_INTERVAL: {
+    case ADD_WORK_INTERVAL: {
       const { value, dayId } = payload;
       newState.items = state.items.map((x) =>
         x.id === dayId
           ? {
               ...x,
-              nonWorkIntervals: [...x.nonWorkIntervals, value],
+              workIntervals: [...x.workIntervals, value],
             }
           : x
       );
@@ -34,29 +34,29 @@ export function reducer(state, { type, payload }) {
       //   variables: {
       //     workScheduleDay: {
       //       id: dayId,
-      //       nonWorkIntervals: newState.items
+      //       workIntervals: newState.items
       //         .find((x) => x.id === dayId)
-      //         .nonWorkIntervals.map((x) => pick(x, ["start", "end"])),
+      //         .workIntervals.map((x) => pick(x, ["start", "end"])),
       //     },
       //   },
       // });
       break;
     }
-    case DELETE_NON_WORK_INTERVAL: {
-      const { dayId, nonWorkIntervalId } = payload;
+    case DELETE_WORK_INTERVAL: {
+      const { dayId, workIntervalId } = payload;
       newState.items = state.items.map((item) =>
         item.id == dayId
           ? {
               ...item,
-              nonWorkIntervals: item.nonWorkIntervals.filter(
-                (x) => x.id !== nonWorkIntervalId
+              workIntervals: item.workIntervals.filter(
+                (x) => x.id !== workIntervalId
               ),
             }
           : item
       );
       break;
     }
-    case RESET_NON_WORK_INTERVAL: {
+    case RESET_WORK_INTERVAL: {
       const { value } = payload;
       newState.items = value;
       break;

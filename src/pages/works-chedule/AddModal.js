@@ -1,15 +1,13 @@
-import dayjs from "dayjs";
 import React from "react";
 import { Button, Modal, Text, View } from "react-native";
 import DurationPicker from "../../components/DurationPicker";
-import { Layout } from "../../layout";
 
 export default function AddModal({
   visible,
   dateEndInput,
   dateStartInput,
   onDateInput,
-  onAddNonWorkInterval,
+  onAddWorkInterval,
   handleClose,
 }) {
   return (
@@ -36,7 +34,7 @@ export default function AddModal({
             step: 1,
           }}
         />
-        <Button title="Confirmar" onPress={onAddNonWorkInterval} />
+        <Button title="Confirmar" onPress={onAddWorkInterval} />
         <Text></Text>
         <Button title="Cancelar" color={"red"} onPress={handleClose} />
       </View>

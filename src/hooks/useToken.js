@@ -7,7 +7,7 @@ import { useAppContext } from "../appProvider";
 import gql from "graphql-tag";
 import makeApolloClient from "../apollo";
 
-const HOME_ROUTE = "/haircuts";
+export const HOME_ROUTE = "/haircuts";
 
 const LOGIN_BY_TOKEN_MUTATION = gql`
   mutation LogInByToken($token: String!) {
@@ -61,8 +61,6 @@ export default function useToken({ apolloClient }) {
             user,
             apolloClient,
           }));
-
-          
         })
         .catch(() => {
           Alert.alert("Error", "No se pudo iniciar sesión");

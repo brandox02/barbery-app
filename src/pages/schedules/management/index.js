@@ -1,5 +1,5 @@
-import React from "react";
-import { Button, ScrollView, Text, View } from "react-native";
+import React, { useEffect } from "react";
+import { Alert, Button, ScrollView, Text, View } from "react-native";
 import HeaderModal from "../../../components/HeaderModal";
 import useManagement from "./useManagement";
 import HaircutPicker from "../../../components/HaircutPicker";
@@ -18,7 +18,21 @@ export default function ScheduleManagement() {
     setSelectedScheduleDate,
     onSubmit,
     busyDates,
+    error,
+    navigate,
   } = useManagement();
+
+  useEffect(() => {
+    if (error) {
+      Alert.alert("Ha ocurrido un error inesperado");
+      const timeoutId = setTimeout(() => {
+        navigate(-1);
+      }, 1000);
+      return () => {
+        clearTimeout(timeoutId);
+      };
+    }
+  });
 
   return (
     <View>

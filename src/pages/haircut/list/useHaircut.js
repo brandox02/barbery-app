@@ -2,6 +2,7 @@ import gql from "graphql-tag";
 import { useQuery } from "react-apollo";
 import { useNavigate } from "react-router-native";
 import { useAppContext } from "../../../appProvider";
+import { usePopulate } from "../../../hooks/usePopulate";
 
 export const HAIRCUTS_QUERY = gql`
   query Haircuts {
@@ -16,11 +17,8 @@ export const HAIRCUTS_QUERY = gql`
 `;
 
 export default function useHaircut() {
-  const [{ apolloClient }] = useAppContext();
-  const { data, loading } = useQuery(HAIRCUTS_QUERY, {
-    variables: {},
-    client: apolloClient,
-    fetchPolicy: "network-only",
+  const { data, loading } = usePopulate({
+    graphqlQuery: HAIRCUTS_QUERY,
   });
 
   const navigate = useNavigate();

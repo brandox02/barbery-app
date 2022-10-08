@@ -10,6 +10,7 @@ import CardMenu from "./Menu";
 export default function Haircut() {
   const { haircuts, goToCreate, goToUpdate, loading } = useHaircut();
   const [{ user }] = useAppContext();
+
   return (
     <>
       <HeaderPage title={"Cortes de Pelo"} />

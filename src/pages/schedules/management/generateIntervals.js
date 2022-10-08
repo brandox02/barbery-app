@@ -98,10 +98,14 @@ const generateIntervals = (time) => {
   const totalMinutes24 = 24 * 60;
   const arr = [];
   for (let i = 0; i < totalMinutes24; i += minutes) {
-    arr.push({
+    const item = {
       start: dayjs(timeToUnix("00:00:00")).add(i, "minutes"),
       end: dayjs(timeToUnix("00:00:00")).add(i + minutes, "minutes"),
-    });
+    };
+    if (item.end.get("hours") === 0 || item.start.get("hours") === 0) {
+      continue;
+    }
+    arr.push(item);
   }
   return arr;
 };
