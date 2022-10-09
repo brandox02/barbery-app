@@ -72,6 +72,7 @@ export default function ScheduleManagement() {
                   title="Seleccionar Fecha"
                   onPress={() =>
                     DateTimePickerAndroid.open({
+                      minimumDate: dayjs().toDate(),
                       locale: "es-ES",
                       value: date.toDate(),
                       onChange: (_, x) => setDate(dayjs(x)),
