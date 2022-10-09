@@ -29,7 +29,7 @@ export function usePopulate({
     if (useQueryResponse.error) {
       if (onError) onError();
       else {
-        Alert.alert("Ha ocurrido un error inesperado!");
+        Alert.alert("Ha Ocurrido un Error Inesperado!");
         navigate(HOME_ROUTE);
       }
     }

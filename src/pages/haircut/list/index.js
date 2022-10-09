@@ -8,7 +8,13 @@ import { useAppContext } from "../../../appProvider";
 import CardMenu from "./Menu";
 
 export default function Haircut() {
-  const { haircuts, goToCreate, goToUpdate, loading } = useHaircut();
+  const {
+    haircuts,
+    goToCreate,
+    goToUpdate,
+    loading,
+    launchDeleteHaircutConfirm,
+  } = useHaircut();
   const [{ user }] = useAppContext();
 
   return (
@@ -34,15 +40,15 @@ export default function Haircut() {
               image={imageUrl}
               price={price}
               title={name}
-              onEdit={() => goToUpdate(id)}
-              onDelete={() => {}}
             >
               <HaircutCard.CardHeader
                 title={name}
                 right={
                   user?.isAdmin && (
                     <CardMenu
-                      onDelete={() => {}}
+                      onDelete={async () =>
+                        await launchDeleteHaircutConfirm(id)
+                      }
                       onEdit={() => goToUpdate(id)}
                     />
                   )

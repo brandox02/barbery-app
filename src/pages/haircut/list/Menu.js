@@ -6,8 +6,8 @@ export default function CardMenu({ onEdit, onDelete }) {
 
   const surround =
     (fn) =>
-    (...args) => {
-      fn(...args);
+    async (...args) => {
+      await fn(...args);
       setVisible(false);
     };
 

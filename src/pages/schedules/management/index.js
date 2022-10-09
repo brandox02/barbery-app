@@ -25,7 +25,7 @@ export default function ScheduleManagement() {
 
   useEffect(() => {
     if (error) {
-      Alert.alert("Ha ocurrido un error inesperado");
+      Alert.alert("Ha Ocurrido un Error Inesperado");
       const timeoutId = setTimeout(() => {
         navigate(-1);
       }, 1000);
