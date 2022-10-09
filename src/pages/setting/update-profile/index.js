@@ -30,6 +30,13 @@ export default function UpdateProfile({ setToken }) {
           placeholder={"Ingresa el segundo nombre"}
           editable={true}
         />
+        <FormInputElement
+          control={methods.control}
+          name={"phoneNumber"}
+          label={"Número Celular"}
+          placeholder={"Ingresa el número celular"}
+          editable={true}
+        />
 
         <FormInputElement
           control={methods.control}

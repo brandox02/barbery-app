@@ -34,6 +34,7 @@ export default function useUpdateProfile({ setToken }) {
         "password",
         "firstname",
         "lastname",
+        "phoneNumber",
       ]);
 
       payload.image = data.imageUrl;
@@ -50,5 +51,5 @@ export default function useUpdateProfile({ setToken }) {
     })
   );
 
-  return { methods, onUpdateProfile,loading };
+  return { methods, onUpdateProfile, loading };
 }

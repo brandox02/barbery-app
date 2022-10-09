@@ -59,6 +59,15 @@ export default function SignIn({ setToken }) {
           />
         </View>
         <View style={styles.linealForm}>
+          <Text>Número Celular:</Text>
+          <RHFInput
+            control={control}
+            name={"phoneNumber"}
+            style={styles.textInput}
+            placeholder={"Ingresa tu número de celular"}
+          />
+        </View>
+        <View style={styles.linealForm}>
           <Text>Contraseña:</Text>
           <RHFInput
             control={control}
@@ -80,9 +89,6 @@ export default function SignIn({ setToken }) {
         </View>
       </View>
       <View style={styles.buttonContainer}>
-        {/* <TouchableOpacity>
-          <Text>Iniciar Sesión con mi cuenta</Text>
-        </TouchableOpacity> */}
         <Button
           color={"grey"}
           title={"Ir a Iniciar Sesión"}

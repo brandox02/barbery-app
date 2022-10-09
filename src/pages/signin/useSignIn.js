@@ -48,12 +48,14 @@ export default function useSignIn({ setToken }) {
           "lastname",
           "password",
           "username",
+          "phoneNumber",
         ]);
         payload.email = payload.email.trim();
         payload.firstname = payload.firstname.trim();
         payload.lastname = payload.lastname.trim();
         payload.password = payload.password.trim();
         payload.username = payload.username.trim();
+        payload.phoneNumber = payload.phoneNumber.trim();
 
         const response = await signInMutation({ variables: { user: payload } });
         const token = response.data.signIn.token;

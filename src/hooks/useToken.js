@@ -21,6 +21,7 @@ const LOGIN_BY_TOKEN_MUTATION = gql`
         password
         username
         imageUrl
+        phoneNumber
       }
     }
   }
