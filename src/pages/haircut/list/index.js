@@ -38,7 +38,7 @@ export default function Haircut() {
               onDelete={() => {}}
             >
               <HaircutCard.CardHeader
-                title={"Header del card"}
+                title={name}
                 right={
                   user?.isAdmin && (
                     <CardMenu
