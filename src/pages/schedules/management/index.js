@@ -7,6 +7,7 @@ import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
 import { Divider } from "react-native-paper";
 import AvalibleDates from "../../../components/AvalibleDates";
 import dayjs from "dayjs";
+import { Conditional } from "../../../components/ConditionalComponents";
 
 export default function ScheduleManagement() {
   const {
@@ -47,9 +48,25 @@ export default function ScheduleManagement() {
           <View>
             {haircut && (
               <View>
-                <Text style={{ fontSize: 17, marginTop: 10 }}>
-                  Fecha de la Cita:
-                </Text>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    marginBottom: 10,
+                  }}
+                >
+                  <Text style={{ fontSize: 17, marginTop: 10 }}>
+                    Fecha de la Cita:
+                  </Text>
+                  <Conditional>
+                    <Conditional.If condition={!!date}>
+                      <Text style={{ fontSize: 16 }}>
+                        {date.format("DD/MM/YYYY")}
+                      </Text>
+                    </Conditional.If>
+                  </Conditional>
+                </View>
 
                 <Button
                   title="Seleccionar Fecha"
