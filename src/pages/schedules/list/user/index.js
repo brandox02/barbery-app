@@ -21,7 +21,11 @@ export default function UserList({ user }) {
       >
         <Button title={"Agendar Cita"} onPress={goToManagement} />
       </View>
-      <SchedulesList where={{ userId: user.id }} hideUserLabel/>
+      <SchedulesList
+        where={{ userId: user.id }}
+        hideUserLabel
+        showCancelButton
+      />
     </View>
   );
 }

@@ -1,10 +1,11 @@
 import gql from "graphql-tag";
 import React, { useState } from "react";
-import { Text, View } from "react-native";
+import { ScrollView, Text, View } from "react-native";
 import { useAppContext } from "../../appProvider";
 import { usePopulate } from "../../hooks/usePopulate";
 import Card from "./Card";
 import { Conditional } from "../ConditionalComponents/";
+import { getHeightByPercent } from "../../utils/getHeightByPercent";
 
 const GET_SCHEDULES = gql`
   query Schedules($where: ScheduleWhereInput) {
@@ -27,9 +28,10 @@ export default function SchedulesList({
   where,
   hideUserLabel,
   nonAppointmentAvaliblesLabel = "No hay citas agendadas",
+  showCancelButton,
 }) {
   const [schedules, setSchedules] = useState([]);
-  usePopulate({
+  const { refetch } = usePopulate({
     graphqlQuery: GET_SCHEDULES,
     onPopulate: async ({ schedules }) => {
       setSchedules(schedules);
@@ -42,13 +44,17 @@ export default function SchedulesList({
     <View>
       <Conditional>
         <Conditional.If condition={schedules.length}>
-          {schedules.map((schedule) => (
-            <Card
-              key={schedule.id}
-              schedule={schedule}
-              user={hideUserLabel ? null : user}
-            />
-          ))}
+          <ScrollView style={{ marginBottom: getHeightByPercent("15%") }}>
+            {schedules.map((schedule) => (
+              <Card
+                key={schedule.id}
+                schedule={schedule}
+                user={hideUserLabel ? null : user}
+                showCancelButton={showCancelButton}
+                refetch={refetch}
+              />
+            ))}
+          </ScrollView>
         </Conditional.If>
         <Conditional.Else>
           <View style={{ alignItems: "center", marginTop: 20 }}>

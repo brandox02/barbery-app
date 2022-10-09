@@ -1,9 +1,30 @@
+import { gql, useMutation } from "@apollo/react-hooks";
 import dayjs from "dayjs";
-import { Button, Image, View } from "react-native";
+import { Alert, Button, Image, View } from "react-native";
 import { Text } from "react-native-paper";
+import { useAppContext } from "../../appProvider";
 import addTime from "../../utils/addTime";
+import Spinner from "../../components/Spinner";
 
-export default function Card({ schedule, user }) {
+const SAVE_SCHEDULE = gql`
+  mutation SaveSchedule($schedule: ScheduleInput!) {
+    saveSchedule(schedule: $schedule) {
+      haircut {
+        duration
+        name
+        id
+      }
+      id
+      scheduleDate
+      user {
+        id
+        username
+      }
+    }
+  }
+`;
+
+export default function Card({ schedule, user, showCancelButton, refetch }) {
   const startDate = dayjs(schedule.scheduleDate);
   const endDate = addTime({
     date: schedule.scheduleDate,
@@ -13,6 +34,29 @@ export default function Card({ schedule, user }) {
   const timeLabel = `${startDate.format("hh:mmA")} - ${endDate.format(
     "hh:mmA"
   )}`;
+
+  const [{ apolloClient }] = useAppContext();
+
+  const [cancelScheduleMutation, { loading }] = useMutation(SAVE_SCHEDULE, {
+    client: apolloClient,
+  });
+
+  async function cancelSchedule() {
+    const { id } = schedule;
+    try {
+      await cancelScheduleMutation({
+        variables: { schedule: { id, cancelled: true } },
+      });
+      await refetch();
+
+      Alert.alert("Cita Cancelada Exitosamente");
+    } catch (error) {
+      Alert.alert(
+        "Ha ocurrido un error inesperado",
+        "Ocurrió un error inesperado al momento de cancelar la cita"
+      );
+    }
+  }
 
   return (
     <View
@@ -25,11 +69,12 @@ export default function Card({ schedule, user }) {
         borderColor: "grey",
       }}
     >
+      <Spinner visible={loading} />
       <View
         style={{
           flexDirection: "row",
           justifyContent: "space-between",
-          marginBottom: 20
+          marginBottom: 20,
         }}
       >
         <View style={{ justifyContent: "space-around" }}>
@@ -51,9 +96,15 @@ export default function Card({ schedule, user }) {
           />
         </View>
       </View>
-      <View>
-        <Button title={"Cancelar Cita"} color={'red'}/>
-      </View>
+      {showCancelButton && (
+        <View>
+          <Button
+            title={"Cancelar Cita"}
+            color={"red"}
+            onPress={cancelSchedule}
+          />
+        </View>
+      )}
     </View>
   );
 }

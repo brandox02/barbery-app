@@ -9,7 +9,6 @@ export default function DetailScheduleModal({
   setVisible,
   datesSelected,
 }) {
-  
   return (
     <Modal visible={visible} transparent={false} animationType="slide">
       <View style={{ marginTop: Constants.statusBarHeight }}>
@@ -19,6 +18,7 @@ export default function DetailScheduleModal({
         />
         <View style={{ margin: 20 }}>
           <SchedulesList
+            showCancelButton
             where={{ dates: datesSelected.map((x) => `${x} 00:00:00`) }}
           />
         </View>
