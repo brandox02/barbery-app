@@ -7,6 +7,7 @@ import { usePopulate } from "../../hooks/usePopulate";
 import HaircutCard from "./HaicutCard";
 import dayjs from "dayjs";
 import { timeToUnix } from "../../utils/timeToUnix";
+import Spinner from "../../components/Spinner";
 import NumberFormat from "react-number-format";
 
 function Card({ haircut }) {
@@ -57,7 +58,7 @@ function Card({ haircut }) {
 export default function HaircutPicker({ haircut, setHaircut }) {
   const [haircuts, setHaircuts] = useState([]);
   const [visible, setVisible] = useState(false);
-  usePopulate({
+  const { loading } = usePopulate({
     graphqlQuery: HAIRCUTS_QUERY,
     variables: {},
     onPopulate: async (data) => {
@@ -66,6 +67,7 @@ export default function HaircutPicker({ haircut, setHaircut }) {
   });
   return (
     <View>
+      <Spinner visible={loading} />
       <Text style={{ fontSize: 16, marginTop: 20 }}>
         {"Selecciona el Corte de Pelo:"}
       </Text>

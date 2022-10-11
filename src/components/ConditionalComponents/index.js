@@ -8,10 +8,9 @@ export function Conditional({ children }) {
 
   const matched = arr
     .filter((comp) => comp.type.name === "If")
-    .find((comp) => comp.props.condition);
+    .find((comp) => comp.props.condition === true);
 
-  if (matched) return matched;
-  if (elseComp) return elseComp;
+  return matched || elseComp;
 }
 
 Conditional.If = function If({ children, condition }) {

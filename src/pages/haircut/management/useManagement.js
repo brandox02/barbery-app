@@ -22,7 +22,9 @@ export default function useManagement() {
     },
   });
   const [{ apolloClient }] = useAppContext();
-  const [saveMutation] = useMutation(SAVE_MUTATION, { client: apolloClient });
+  const [saveMutation, { loading }] = useMutation(SAVE_MUTATION, {
+    client: apolloClient,
+  });
   const [imageError, setImageError] = useState(false);
   const navigate = useNavigate();
   const { haircutId } = useParams();
@@ -104,6 +106,6 @@ export default function useManagement() {
     methods,
     haircutId,
     goToBack,
-    isLoading: isLoading,
+    isLoading: isLoading || loading,
   };
 }

@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { Alert, Button, ScrollView, Text, View } from "react-native";
+import React from "react";
+import { Button, ScrollView, Text, View } from "react-native";
 import HeaderModal from "../../../components/HeaderModal";
 import useManagement from "./useManagement";
 import HaircutPicker from "../../../components/HaircutPicker";
@@ -18,22 +18,9 @@ export default function ScheduleManagement() {
     selectedScheduleDate,
     setSelectedScheduleDate,
     onSubmit,
-    busyDates,
-    error,
-    navigate,
-  } = useManagement();
 
-  useEffect(() => {
-    if (error) {
-      Alert.alert("Ha Ocurrido un Error Inesperado");
-      const timeoutId = setTimeout(() => {
-        navigate(-1);
-      }, 1000);
-      return () => {
-        clearTimeout(timeoutId);
-      };
-    }
-  });
+    loading,
+  } = useManagement();
 
   return (
     <View>
@@ -75,7 +62,10 @@ export default function ScheduleManagement() {
                       minimumDate: dayjs().toDate(),
                       locale: "es-ES",
                       value: date.toDate(),
-                      onChange: (_, x) => setDate(dayjs(x)),
+                      onChange: (_, x) => {
+                        setDate(dayjs(x));
+                        console.log("no changing");
+                      },
                     })
                   }
                 />
@@ -85,9 +75,10 @@ export default function ScheduleManagement() {
               {haircut && date && (
                 <AvalibleDates
                   duration={haircut.duration}
-                  unAvaibleSchedules={busyDates}
+                  loading={loading}
                   onSelectSchedule={setSelectedScheduleDate}
                   selectedSchedule={selectedScheduleDate}
+                  date={date}
                 />
               )}
             </ScrollView>

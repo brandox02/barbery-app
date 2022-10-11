@@ -43,7 +43,6 @@ export default function useManagement() {
   });
   const [date, setDate] = useState(dayjs());
   const [{ user, apolloClient }] = useAppContext();
-  const navigate = useNavigate();
   const [saveScheduleMutation, { loading: loadingMutation }] = useMutation(
     SAVE_SCHEDULE,
     {
@@ -51,15 +50,15 @@ export default function useManagement() {
     }
   );
 
-  const { data, error } = useQuery(SCHEDULES_PER_DAY, {
-    client: apolloClient,
-    variables: { where: { date: date.format("YYYY-MM-DD") } },
-    fetchPolicy: "network-only",
-  });
+  // const { data, error, loading } = useQuery(SCHEDULES_PER_DAY, {
+  //   client: apolloClient,
+  //   variables: { where: { date: date.format("YYYY-MM-DD") } },
+  //   fetchPolicy: "network-only",
+  // });
 
-  useEffect(() => {
-    setSelectedScheduleDate({ start: null, end: null });
-  }, [data]);
+  // useEffect(() => {
+  //   setSelectedScheduleDate({ start: null, end: null });
+  // }, [data]);
 
   const onSubmit = withGraphqlErrorHandler(async () => {
     if (!haircut) {
@@ -93,11 +92,6 @@ export default function useManagement() {
     navigate(-1);
   });
 
-  const busyDates = useMemo(
-    () => data?.schedulesPerDay || [],
-    [data?.schedulesPerDay]
-  );
-
   return {
     haircut,
     setHaircut,
@@ -106,9 +100,7 @@ export default function useManagement() {
     selectedScheduleDate,
     setSelectedScheduleDate,
     onSubmit,
-    busyDates,
-    loading: loadingMutation,
-    error,
-    navigate,
+
+    loadingMutation,
   };
 }

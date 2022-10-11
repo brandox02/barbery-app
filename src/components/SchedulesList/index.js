@@ -6,6 +6,7 @@ import { usePopulate } from "../../hooks/usePopulate";
 import Card from "./Card";
 import { Conditional } from "../ConditionalComponents/";
 import { getHeightByPercent } from "../../utils/getHeightByPercent";
+import Spinner from "../../components/Spinner";
 
 const GET_SCHEDULES = gql`
   query Schedules($where: ScheduleWhereInput) {
@@ -31,7 +32,7 @@ export default function SchedulesList({
   showCancelButton,
 }) {
   const [schedules, setSchedules] = useState([]);
-  const { refetch } = usePopulate({
+  const { refetch, loading } = usePopulate({
     graphqlQuery: GET_SCHEDULES,
     onPopulate: async ({ schedules }) => {
       setSchedules(schedules);
@@ -39,11 +40,11 @@ export default function SchedulesList({
     variables: { where },
   });
   const [{ user }] = useAppContext();
-
   return (
     <View>
+      <Spinner visible={loading} />
       <Conditional>
-        <Conditional.If condition={schedules.length}>
+        <Conditional.If condition={schedules.length && !loading}>
           <ScrollView style={{ marginBottom: getHeightByPercent("15%") }}>
             {schedules.map((schedule) => (
               <Card
@@ -55,6 +56,12 @@ export default function SchedulesList({
               />
             ))}
           </ScrollView>
+        </Conditional.If>
+        <Conditional.If condition={!!loading}>
+          <View style={{ zIndex: 1 }}>
+            <Spinner visible={loading} />
+            <Text>{"Cargando..."}</Text>
+          </View>
         </Conditional.If>
         <Conditional.Else>
           <View style={{ alignItems: "center", marginTop: 20 }}>

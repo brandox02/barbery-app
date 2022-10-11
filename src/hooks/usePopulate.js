@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useQuery } from "react-apollo";
 import { Alert } from "react-native";
 import { useNavigate } from "react-router-native";
@@ -15,10 +15,10 @@ export function usePopulate({
   const useQueryResponse = useQuery(graphqlQuery, {
     variables,
     client: apolloClient,
-    fetchPolicy: "network-only",
+    fetchPolicy: "cache-and-network",
   });
-  const navigate = useNavigate();
 
+  const navigate = useNavigate();
   useEffect(() => {
     if (useQueryResponse.data) {
       onPopulate(useQueryResponse.data);

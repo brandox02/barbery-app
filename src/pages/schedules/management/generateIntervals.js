@@ -1,4 +1,5 @@
 import dayjs from "dayjs";
+import { useMemo } from "react";
 dayjs.extend(require("dayjs/plugin/isBetween"));
 
 const timeToUnix = (time) => {
@@ -110,25 +111,38 @@ const generateIntervals = (time) => {
   return arr;
 };
 
-export function generateAvailableScheduleDates({
+export function useGenerateAvailableScheduleDates({
   duration,
   unAvaibleSchedules,
 }) {
-  return generateIntervals(duration).filter(({ start }) => {
-    const some = unAvaibleSchedules.some((schedule) =>
-      isChoken({
-        duration,
-        time: start.format("HH:mm:ss"),
-        endTime: schedule.end,
-        startTime: schedule.start,
-      })
-    );
+  const response = useMemo(() => {
+    console.log('input":', {
+      duration,
+      unAvaibleSchedules,
+    });
+    const to = generateIntervals(duration).filter(({ start }) => {
+      const some = unAvaibleSchedules.some((schedule) =>
+        isChoken({
+          duration,
+          time: start.format("HH:mm:ss"),
+          endTime: schedule.end,
+          startTime: schedule.start,
+        })
+      );
 
-    return !some;
-  });
+      return !some;
+    });
+    console.log("output:", to);
+    return to;
+  }, [duration, unAvaibleSchedules]);
+
+  return response;
 }
 // console.log(
-//   generateAvailableScheduleDates({ duration, unAvaibleSchedules: schedules }).map(
+//   egnerateAvailableScheduleDates({
+//     duration,
+//     unAvaibleSchedules: schedules,
+//   }).map(
 //     ({ start, end }) => `${start.format("HH:mm")} - ${end.format("HH:mm")}`
 //   )
 // );
@@ -137,7 +151,7 @@ export function generateAvailableScheduleDates({
 //     const some = schedules.some((schedule) =>
 //       isChoken({
 //         duration,
-//         time: start.format('HH:mm:ss'),
+//         time: start.format("HH:mm:ss"),
 //         endTime: schedule.end,
 //         startTime: schedule.start,
 //       })

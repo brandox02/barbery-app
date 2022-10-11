@@ -1,23 +1,36 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { Pressable, Text, View } from "react-native";
-import { generateAvailableScheduleDates } from "../../pages/schedules/management/generateIntervals";
 import formatTime from "../../utils/formatTime";
 import { generateRandomId } from "../../utils/generateRandomId";
+import { usePopulate } from "../../hooks/usePopulate";
+import Spinner from "../../components/Spinner";
+import gql from "graphql-tag";
+import dayjs from "dayjs";
+
+const GET_AVALIBLE_INTERVALS = gql`
+  query GetAvalibleIntervals($date: String!, $duration: String!) {
+    getAvalibleIntervals(date: $date, duration: $duration) {
+      end
+      start
+    }
+  }
+`;
 
 export default function AvalibleDates({
-  unAvaibleSchedules,
   duration,
   onSelectSchedule,
   selectedSchedule,
+  date,
 }) {
-  const avalibleTimes = useMemo(
-    () =>
-      generateAvailableScheduleDates({
-        duration,
-        unAvaibleSchedules,
-      }),
-    [duration, unAvaibleSchedules]
-  );
+  const { data, loading } = usePopulate({
+    graphqlQuery: GET_AVALIBLE_INTERVALS,
+    variables: { date: date.format("YYYY-MM-DD"), duration },
+  });
+
+  const avalibleTimes = (data?.getAvalibleIntervals || []).map((item) => ({
+    start: dayjs(item.start),
+    end: dayjs(item.end),
+  }));
 
   function AvalibleDateItem({ start, end }) {
     const isSelected =
@@ -51,18 +64,15 @@ export default function AvalibleDates({
 
   return (
     <View style={{ marginTop: 30 }}>
+      <Spinner visible={loading} />
       <Text style={{ fontSize: 17 }}>Horarios Disponibles</Text>
-      {avalibleTimes.map(({ start, end }, i) => {
-        return (
-          true && (
-            <AvalibleDateItem
-              key={generateRandomId()}
-              start={start}
-              end={end}
-            />
-          )
-        );
-      })}
+      {loading ? (
+        <Text style={{ marginTop: 10 }}>{"Cargando..."}</Text>
+      ) : (
+        avalibleTimes.map(({ start, end }, i) => (
+          <AvalibleDateItem key={generateRandomId()} start={start} end={end} />
+        ))
+      )}
     </View>
   );
 }
