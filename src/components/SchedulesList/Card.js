@@ -41,21 +41,28 @@ export default function Card({ schedule, user, showCancelButton, refetch }) {
     client: apolloClient,
   });
 
-  async function cancelSchedule() {
-    const { id } = schedule;
-    try {
-      await cancelScheduleMutation({
-        variables: { schedule: { id, cancelled: true } },
-      });
-      await refetch();
+  function launchCncelScheduleModal() {
+    async function cancelSchedule() {
+      const { id } = schedule;
+      try {
+        await cancelScheduleMutation({
+          variables: { schedule: { id, cancelled: true } },
+        });
+        await refetch();
 
-      Alert.alert("Cita Cancelada Exitosamente");
-    } catch (error) {
-      Alert.alert(
-        "Ha ocurrido un error inesperado",
-        "Ocurrió un error inesperado al momento de cancelar la cita"
-      );
+        Alert.alert("Cita Cancelada Exitosamente");
+      } catch (error) {
+        Alert.alert(
+          "Ha ocurrido un error inesperado",
+          "Ocurrió un error inesperado al momento de cancelar la cita"
+        );
+      }
     }
+
+    Alert.alert("Estas seguro que deseas cancelar esta cita?", "", [
+      { text: "Cancelar" },
+      { text: "Confirmar", onPress: cancelSchedule },
+    ]);
   }
 
   return (
@@ -101,7 +108,7 @@ export default function Card({ schedule, user, showCancelButton, refetch }) {
           <Button
             title={"Cancelar Cita"}
             color={"red"}
-            onPress={cancelSchedule}
+            onPress={launchCncelScheduleModal}
           />
         </View>
       )}

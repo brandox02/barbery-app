@@ -26,8 +26,8 @@ export const Layout = ({ children }) => {
         {menuItems.map(({ img, label, id, to }) => (
           <Pressable key={id} onPress={() => navigate(to)}>
             <View style={styles.menuItem}>
-              <Image source={img} style={{ height: 30, width: 30, }} />
-              <Text>{label}</Text>
+              <Image source={img} style={{ height: 30, width: 30 }} />
+              <Text style={{ fontSize: 13 }}>{label}</Text>
             </View>
           </Pressable>
         ))}

@@ -49,16 +49,7 @@ export default function useManagement() {
       client: apolloClient,
     }
   );
-
-  // const { data, error, loading } = useQuery(SCHEDULES_PER_DAY, {
-  //   client: apolloClient,
-  //   variables: { where: { date: date.format("YYYY-MM-DD") } },
-  //   fetchPolicy: "network-only",
-  // });
-
-  // useEffect(() => {
-  //   setSelectedScheduleDate({ start: null, end: null });
-  // }, [data]);
+  const navigate = useNavigate();
 
   const onSubmit = withGraphqlErrorHandler(async () => {
     if (!haircut) {

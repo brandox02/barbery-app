@@ -5,9 +5,8 @@ import useManagement from "./useManagement";
 import HaircutPicker from "../../../components/HaircutPicker";
 import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
 import { Divider } from "react-native-paper";
-import AvalibleDates from "../../../components/AvalibleDates";
+import AvalibleDates from "./accesories/AvalibleDates";
 import dayjs from "dayjs";
-import { Conditional } from "../../../components/ConditionalComponents";
 
 export default function ScheduleManagement() {
   const {
@@ -46,13 +45,10 @@ export default function ScheduleManagement() {
                   <Text style={{ fontSize: 17, marginTop: 10 }}>
                     Fecha de la Cita:
                   </Text>
-                  <Conditional>
-                    <Conditional.If condition={!!date}>
-                      <Text style={{ fontSize: 16 }}>
-                        {date.format("DD/MM/YYYY")}
-                      </Text>
-                    </Conditional.If>
-                  </Conditional>
+
+                  <Text style={{ fontSize: 16 }}>
+                    {date.format("DD/MM/YYYY")}
+                  </Text>
                 </View>
 
                 <Button

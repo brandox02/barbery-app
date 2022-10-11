@@ -23,14 +23,12 @@ import {
 
 export default function useWorkSchedule() {
   const [{ apolloClient }] = useAppContext();
-  const [saveWorkScheduleDaysMutation, { loading }] = useMutation(
-    SAVE_WORK_SCHEDULE_DAYS,
-    { client: apolloClient }
-  );
+  const [saveWorkScheduleDaysMutation, { loading: loadingMutation }] =
+    useMutation(SAVE_WORK_SCHEDULE_DAYS, { client: apolloClient });
   const [{ items, dateEndInput, dateStartInput, dayId, visible }, dispatch] =
     useReducer(reducer, initialState);
 
-  usePopulate({
+  const { loading } = usePopulate({
     variables: {},
     graphqlQuery: GET_WORK_SCHEDULES,
     onPopulate: async (data) => {
@@ -105,7 +103,7 @@ export default function useWorkSchedule() {
     onAddWorkInterval,
     onDeleteWorkInterval,
     onSave,
-    isLoading: loading,
+    isLoading: loading || loadingMutation,
     onOpenModal,
     dayId,
     toggleModal,

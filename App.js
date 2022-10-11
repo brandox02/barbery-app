@@ -15,6 +15,7 @@ import { Layout } from "./src/layout";
 import { Provider } from "react-native-paper";
 import { isProductionEnv } from "./src/utils/isProductionEnv";
 import initReactNativeCalendarConfig from "./src/reactNativeCalendarConfig";
+import Spinner from "./src/components/Spinner";
 
 const apolloClient = makeApolloClient();
 initReactNativeCalendarConfig();

@@ -1,9 +1,9 @@
 import React from "react";
 import { Pressable, Text, View } from "react-native";
-import formatTime from "../../utils/formatTime";
-import { generateRandomId } from "../../utils/generateRandomId";
-import { usePopulate } from "../../hooks/usePopulate";
-import Spinner from "../../components/Spinner";
+import formatTime from "../../../../../utils/formatTime";
+import { generateRandomId } from "../../../../../utils/generateRandomId";
+import { usePopulate } from "../../../../../hooks/usePopulate";
+import Spinner from "../../../../../components/Spinner";
 import gql from "graphql-tag";
 import dayjs from "dayjs";
 

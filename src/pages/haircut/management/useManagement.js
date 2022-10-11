@@ -22,15 +22,17 @@ export default function useManagement() {
     },
   });
   const [{ apolloClient }] = useAppContext();
-  const [saveMutation, { loading }] = useMutation(SAVE_MUTATION, {
-    client: apolloClient,
-  });
+  const [saveMutation, { loading: loadingMutation }] = useMutation(
+    SAVE_MUTATION,
+    {
+      client: apolloClient,
+    }
+  );
   const [imageError, setImageError] = useState(false);
   const navigate = useNavigate();
   const { haircutId } = useParams();
-  const [isLoading, setIsLoading] = useState(false);
 
-  usePopulate({
+  const { loading } = usePopulate({
     graphqlQuery: GET_HAIRCUT,
     variables: { where: { id: parseInt(haircutId) } },
     onPopulate: async (data) => {
@@ -70,34 +72,30 @@ export default function useManagement() {
   const goToBack = () => navigate(-1);
 
   const handleSubmit = methods.handleSubmit(
-    withGraphqlErrorHandler(
-      async (data) => {
-        if (!data.image) {
-          setImageError(true);
-          return;
-        }
-        setIsLoading(true);
-        const payload = pick(data, ["image", "name", "price", "duration"]);
-        payload.price = parseInt(payload.price);
-        payload.duration = unixToTime(payload.duration);
+    withGraphqlErrorHandler(async (data) => {
+      if (!data.image) {
+        setImageError(true);
+        return;
+      }
 
-        if (haircutId) payload.id = parseInt(haircutId);
-        // console.log({ payload });
+      const payload = pick(data, ["image", "name", "price", "duration"]);
+      payload.price = parseInt(payload.price);
+      payload.duration = unixToTime(payload.duration);
 
-        await saveMutation({
-          variables: {
-            haircut: payload,
-          },
-        });
+      if (haircutId) payload.id = parseInt(haircutId);
+      // console.log({ payload });
 
-        setIsLoading(false);
-        Alert.alert(
-          `Corte de pelo ${haircutId ? "actualizado" : "creado"} correctamente`
-        );
-        setTimeout(() => goToBack(), 1000);
-      },
-      () => setIsLoading(false)
-    )
+      await saveMutation({
+        variables: {
+          haircut: payload,
+        },
+      });
+
+      Alert.alert(
+        `Corte de pelo ${haircutId ? "actualizado" : "creado"} correctamente`
+      );
+      setTimeout(() => goToBack(), 1000);
+    })
   );
 
   return {
@@ -106,6 +104,6 @@ export default function useManagement() {
     methods,
     haircutId,
     goToBack,
-    isLoading: isLoading || loading,
+    isLoading: loadingMutation || loading,
   };
 }
