@@ -27,7 +27,7 @@ export const Layout = ({ children }) => {
           <Pressable key={id} onPress={() => navigate(to)}>
             <View style={styles.menuItem}>
               <Image source={img} style={{ height: 30, width: 30 }} />
-              <Text style={{ fontSize: 13 }}>{label}</Text>
+              <Text style={{ fontSize: 11 }}>{label}</Text>
             </View>
           </Pressable>
         ))}
