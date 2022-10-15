@@ -1,7 +1,7 @@
 if (!isProductionEnv()) {
-  // import("./src/reactotron-config").then(() =>
-  //   console.log("Reactotron Configured")
-  // );
+  import("./src/reactotron-config").then(() =>
+    console.log("Reactotron Configured")
+  );
 }
 import React from "react";
 import { ApolloProvider } from "@apollo/react-hooks";
