@@ -3,6 +3,7 @@ import { Modal, View } from "react-native";
 import HeaderModal from "../../../../components/HeaderModal";
 import Constants from "expo-constants";
 import SchedulesList from "../../../../components/SchedulesList";
+import dayjs from "dayjs";
 
 export default function DetailScheduleModal({
   visible,
@@ -19,7 +20,16 @@ export default function DetailScheduleModal({
         <View style={{ margin: 20 }}>
           <SchedulesList
             showCancelButton
-            where={{ dates: datesSelected.map((x) => `${x} 00:00:00`) }}
+            where={{
+              dates: datesSelected.map((x) => {
+                const date = dayjs(x);
+                date.set("hours", 0);
+                date.set("minutes", 0);
+                date.set("seconds", 0);
+                date.set("milliseconds", 0);
+                return date.toDate();
+              }),
+            }}
           />
         </View>
       </View>

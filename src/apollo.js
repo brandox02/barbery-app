@@ -8,7 +8,7 @@ import { getLocalhost } from "./utils/getLocalhost";
 // export let apolloClient = null;
 
 const makeApolloClient = (token) => {
-  const uri = isProductionEnv() ? API_URL : `${getLocalhost()}:5000/graphql`;
+  const uri = isProductionEnv() ? API_URL : `${getLocalhost()}:9000/graphql`;
   // create an apollo link instance, a network interface for apollo client
   const link = new HttpLink({
     uri,

@@ -8,7 +8,7 @@ import gql from "graphql-tag";
 import dayjs from "dayjs";
 
 const GET_AVALIBLE_INTERVALS = gql`
-  query GetAvalibleIntervals($date: String!, $duration: String!) {
+  query GetAvalibleIntervals($date: DateTime!, $duration: String!) {
     getAvalibleIntervals(date: $date, duration: $duration) {
       end
       start
@@ -24,7 +24,7 @@ export default function AvalibleDates({
 }) {
   const { data, loading } = usePopulate({
     graphqlQuery: GET_AVALIBLE_INTERVALS,
-    variables: { date: date.format("YYYY-MM-DD"), duration },
+    variables: { date: date.toDate(), duration },
   });
 
   const avalibleTimes = (data?.getAvalibleIntervals || []).map((item) => ({

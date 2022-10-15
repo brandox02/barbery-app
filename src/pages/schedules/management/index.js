@@ -60,7 +60,6 @@ export default function ScheduleManagement() {
                       value: date.toDate(),
                       onChange: (_, x) => {
                         setDate(dayjs(x));
-                        console.log("no changing");
                       },
                     })
                   }
