@@ -5,7 +5,7 @@ import useSignIn from "./useSignIn";
 import { getInputValidates } from "./getInputValidates";
 import { RHFInput } from "../../components/RHFTextInput";
 import Spinner from "react-native-loading-spinner-overlay/lib";
-
+import Constants from "expo-constants";
 export default function SignIn({ setToken }) {
   const { control, onSubmit, methods, goToLogin, isLoading } = useSignIn({
     setToken,
@@ -95,6 +95,21 @@ export default function SignIn({ setToken }) {
           onPress={goToLogin}
         />
         <Button title={"Registrarme"} onPress={onSubmit} />
+      </View>
+      <View
+        style={{ position: "absolute", top: 5 + Constants.statusBarHeight }}
+      >
+        <Text
+          style={{
+            backgroundColor: "purple",
+            color: "white",
+            paddingVertical: 5,
+            paddingHorizontal: 30,
+            borderRadius: 5,
+          }}
+        >
+          Powered By Brandox02
+        </Text>
       </View>
       <StatusBar style="auto" />
     </View>

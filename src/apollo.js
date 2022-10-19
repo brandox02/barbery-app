@@ -10,6 +10,8 @@ import { getLocalhost } from "./utils/getLocalhost";
 const makeApolloClient = (token) => {
   const uri = isProductionEnv() ? API_URL : `${getLocalhost()}:9000/graphql`;
   // create an apollo link instance, a network interface for apollo client
+
+  console.log("You are connected to the following api: " + uri);
   const link = new HttpLink({
     uri,
     headers: {

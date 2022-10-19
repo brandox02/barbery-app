@@ -1,15 +1,10 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import {
-  Image,
-  StyleSheet,
-  View,
-  Text,
-  Button,
-} from "react-native";
+import { Image, StyleSheet, View, Text, Button } from "react-native";
 import Spinner from "react-native-loading-spinner-overlay/lib";
 import { RHFInput } from "../../components/RHFTextInput";
 import useLogIn from "./useLogIn";
+import Constants from "expo-constants";
 
 export default function LogIn({ setToken }) {
   const { control, onSubmit, goToSignIn, isLoading } = useLogIn({ setToken });
@@ -57,6 +52,21 @@ export default function LogIn({ setToken }) {
           onPress={goToSignIn}
         />
         <Button title={"Iniciar Sesión"} onPress={onSubmit} />
+      </View>
+      <View
+        style={{ position: "absolute", top: 5 + Constants.statusBarHeight }}
+      >
+        <Text
+          style={{
+            backgroundColor: "purple",
+            color: "white",
+            paddingVertical: 5,
+            paddingHorizontal: 30,
+            borderRadius: 5,
+          }}
+        >
+          Powered By Brandox02
+        </Text>
       </View>
       <StatusBar style="auto" />
     </View>
