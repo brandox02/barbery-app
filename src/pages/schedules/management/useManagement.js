@@ -1,22 +1,12 @@
 import { useMutation } from "@apollo/react-hooks";
 import dayjs from "dayjs";
 import gql from "graphql-tag";
-import { useEffect, useMemo, useState } from "react";
-import { useQuery } from "react-apollo";
+import { useState } from "react";
 import { Alert } from "react-native";
 import { useNavigate } from "react-router-native";
 import { useAppContext } from "../../../appProvider";
+import { printDate } from "../../../utils/printDate";
 import withGraphqlErrorHandler from "../../../utils/withGraphqlErrorHandler";
-
-const SCHEDULES_PER_DAY = gql`
-  query SchedulesPerDay($where: ScheduleWhereInput) {
-    schedulesPerDay(where: $where) {
-      start
-      end
-      type
-    }
-  }
-`;
 
 const SAVE_SCHEDULE = gql`
   mutation SaveSchedule($schedule: ScheduleInput!) {
@@ -66,7 +56,11 @@ export default function useManagement() {
     const scheduleDate = date
       .set("hour", selectedScheduleDate.start.get("hours"))
       .set("minute", selectedScheduleDate.start.get("minutes"))
-      .set("second", 0);
+      .set("second", 0)
+      .set("milliseconds", 0);
+
+    console.log("appointment to schedule");
+    printDate(scheduleDate);
 
     const payload = {
       schedule: {
