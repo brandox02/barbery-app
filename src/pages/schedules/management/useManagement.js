@@ -59,7 +59,6 @@ export default function useManagement() {
       .set("second", 0)
       .set("milliseconds", 0);
 
-    console.log("appointment to schedule");
     printDate(scheduleDate);
 
     const payload = {

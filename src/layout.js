@@ -11,11 +11,12 @@ import {
 } from "react-native";
 import Constants from "expo-constants";
 import React from "react";
-import { useNavigate } from "react-router-native";
+import { useLocation, useNavigate } from "react-router-native";
 import menuItems from "./menuItems";
 
 export const Layout = ({ children }) => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   return (
     <View style={styles.container}>
@@ -23,14 +24,23 @@ export const Layout = ({ children }) => {
         <ScrollView showsVerticalScrollIndicator={false}>{children}</ScrollView>
       </View>
       <View style={styles.menuContainer}>
-        {menuItems.map(({ img, label, id, to }) => (
-          <Pressable key={id} onPress={() => navigate(to)}>
-            <View style={styles.menuItem}>
-              <Image source={img} style={{ height: 30, width: 30 }} />
-              <Text style={{ fontSize: 11 }}>{label}</Text>
-            </View>
-          </Pressable>
-        ))}
+        {menuItems.map(({ img, label, id, to }) => {
+          const custromStyles = { ...styles.menuItem };
+
+          if (location.pathname.includes(to)) {
+            custromStyles.borderTopWidth = 3;
+            custromStyles.borderTopColor = "purple";
+          }
+
+          return (
+            <Pressable key={id} onPress={() => navigate(to)}>
+              <View style={custromStyles}>
+                <Image source={img} style={{ height: 30, width: 30 }} />
+                <Text style={{ fontSize: 11 }}>{label}</Text>
+              </View>
+            </Pressable>
+          );
+        })}
       </View>
       <StatusBar />
     </View>

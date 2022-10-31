@@ -83,7 +83,6 @@ export default function useManagement() {
       payload.duration = unixToTime(payload.duration);
 
       if (haircutId) payload.id = parseInt(haircutId);
-      // console.log({ payload });
 
       await saveMutation({
         variables: {
