@@ -40,35 +40,34 @@ export default function SchedulesList({
     variables: { where },
   });
   const [{ user }] = useAppContext();
+
+  if (loading) {
+    return (
+      <View style={{ zIndex: 1 }}>
+        <Spinner visible={loading} />
+        <Text>{"Cargando..."}</Text>
+      </View>
+    );
+  }
   return (
     <View>
-      <Spinner visible={loading} />
-      <Conditional>
-        <Conditional.If condition={schedules.length && !loading}>
-          <ScrollView style={{ marginBottom: getHeightByPercent("15%") }}>
-            {schedules.map((schedule) => (
-              <Card
-                key={schedule.id}
-                schedule={schedule}
-                user={hideUserLabel ? null : user}
-                showCancelButton={showCancelButton}
-                refetch={refetch}
-              />
-            ))}
-          </ScrollView>
-        </Conditional.If>
-        <Conditional.If condition={!!loading}>
-          <View style={{ zIndex: 1 }}>
-            <Spinner visible={loading} />
-            <Text>{"Cargando..."}</Text>
-          </View>
-        </Conditional.If>
-        <Conditional.Else>
-          <View style={{ alignItems: "center", marginTop: 20 }}>
-            <Text>{nonAppointmentAvaliblesLabel}</Text>
-          </View>
-        </Conditional.Else>
-      </Conditional>
+      {schedules.length ? (
+        <ScrollView style={{ marginBottom: getHeightByPercent("15%") }}>
+          {schedules.map((schedule) => (
+            <Card
+              key={schedule.id}
+              schedule={schedule}
+              user={hideUserLabel ? null : user}
+              showCancelButton={showCancelButton}
+              refetch={refetch}
+            />
+          ))}
+        </ScrollView>
+      ) : (
+        <View style={{ alignItems: "center", marginTop: 20 }}>
+          <Text>{nonAppointmentAvaliblesLabel}</Text>
+        </View>
+      )}
     </View>
   );
 }
