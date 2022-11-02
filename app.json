@@ -25,7 +25,8 @@
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.brandox02.app",
-      "permissions": []
+      "permissions": [],
+      "versionCode": 2
     },
     "web": {
       "favicon": "./assets/favicon.png"
