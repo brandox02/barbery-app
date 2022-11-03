@@ -8,11 +8,13 @@ import withGraphqlErrorHandler from "../../utils/withGraphqlErrorHandler";
 import { LOGIN_BY_CREDENTIAL_MUTATION } from "./queries";
 
 export default function useLogIn({ setToken }) {
-  const [{ apolloClient }] = useAppContext();
-  const [logInByCredentialMutation] = useMutation(
-    LOGIN_BY_CREDENTIAL_MUTATION,
-    { client: apolloClient }
-  );
+  const {
+    actions: { login },
+  } = useAppContext();
+  // const [logInByCredentialMutation] = useMutation(
+  //   LOGIN_BY_CREDENTIAL_MUTATION,
+  //   { client: apolloClient }
+  // );
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -32,15 +34,17 @@ export default function useLogIn({ setToken }) {
         payload.password = payload.password.trim();
         payload.username = payload.username.trim();
 
-        const response = await logInByCredentialMutation({
-          variables: { credentials: payload },
-        });
+        await login(payload);
 
-        const token = response.data.logInByCredential.token;
+        // const response = await logInByCredentialMutation({
+        //   variables: { credentials: payload },
+        // });
 
-        setToken(token);
+        // const token = response.data.logInByCredential.token;
 
-        await setToken(token);
+        // setToken(token);
+
+        // await setToken(token);
         setIsLoading(false);
       },
       () => {
