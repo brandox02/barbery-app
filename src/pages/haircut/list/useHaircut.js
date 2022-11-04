@@ -23,7 +23,9 @@ export default function useHaircut() {
     graphqlQuery: HAIRCUTS_QUERY,
   });
 
-  const [{ apolloClient }] = useAppContext();
+  const {
+    state: { apolloClient },
+  } = useAppContext();
 
   const [updateHaircutMutation, { loading: updateLoading }] = useMutation(
     SAVE_MUTATION,

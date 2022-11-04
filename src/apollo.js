@@ -15,7 +15,7 @@ const makeApolloClient = (token) => {
   const link = new HttpLink({
     uri,
     headers: {
-      authorization: token || "",
+      authorization: `Bearer ${token}` || "",
     },
   });
 

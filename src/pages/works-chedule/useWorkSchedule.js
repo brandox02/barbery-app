@@ -22,7 +22,9 @@ import {
 } from "./reducer";
 
 export default function useWorkSchedule() {
-  const [{ apolloClient }] = useAppContext();
+  const {
+    state: { apolloClient },
+  } = useAppContext();
   const [saveWorkScheduleDaysMutation, { loading: loadingMutation }] =
     useMutation(SAVE_WORK_SCHEDULE_DAYS, { client: apolloClient });
   const [{ items, dateEndInput, dateStartInput, dayId, visible }, dispatch] =
@@ -81,15 +83,17 @@ export default function useWorkSchedule() {
   };
 
   const onSave = withGraphqlErrorHandler(async () => {
+    const payload = {
+      workScheduleDays: items.map((item) => ({
+        id: item.id,
+        workIntervals: item.workIntervals.map((x) =>
+          pick(x, ["start", "end", "id"])
+        ),
+      })),
+    };
+
     await saveWorkScheduleDaysMutation({
-      variables: {
-        workScheduleDays: items.map((item) => ({
-          id: item.id,
-          workIntervals: item.workIntervals.map((x) =>
-            pick(x, ["start", "end"])
-          ),
-        })),
-      },
+      variables: payload,
     });
 
     Alert.alert("Horarios guardados correctamente");

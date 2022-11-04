@@ -5,6 +5,8 @@ import AdminList from "./admin";
 import UserList from "./user";
 
 export default function List() {
-  const [{ user }] = useAppContext();
+  const {
+    state: { user },
+  } = useAppContext();
   return <View>{user.isAdmin ? <AdminList /> : <UserList user={user} />}</View>;
 }

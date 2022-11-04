@@ -35,7 +35,9 @@ export default function Card({ schedule, user, showCancelButton, refetch }) {
     "hh:mmA"
   )}`;
 
-  const [{ apolloClient }] = useAppContext();
+  const {
+    state: { apolloClient },
+  } = useAppContext();
 
   const [cancelScheduleMutation, { loading }] = useMutation(SAVE_SCHEDULE, {
     client: apolloClient,

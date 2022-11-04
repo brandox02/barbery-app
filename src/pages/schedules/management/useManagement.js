@@ -32,7 +32,9 @@ export default function useManagement() {
     end: null,
   });
   const [date, setDate] = useState(dayjs());
-  const [{ user, apolloClient }] = useAppContext();
+  const {
+    state: { user, apolloClient },
+  } = useAppContext();
   const [saveScheduleMutation, { loading: loadingMutation }] = useMutation(
     SAVE_SCHEDULE,
     {

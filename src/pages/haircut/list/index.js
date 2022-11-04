@@ -15,7 +15,9 @@ export default function Haircut() {
     loading,
     launchDeleteHaircutConfirm,
   } = useHaircut();
-  const [{ user }] = useAppContext();
+  const {
+    state: { user },
+  } = useAppContext();
 
   return (
     <>

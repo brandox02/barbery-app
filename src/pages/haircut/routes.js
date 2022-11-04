@@ -1,7 +1,7 @@
 import HaircutList from "./list";
 import HaircutManagement from "./management";
 
-export default [
+export const haircutRoutes = [
   {
     path: "/haircuts",
     exact: true,

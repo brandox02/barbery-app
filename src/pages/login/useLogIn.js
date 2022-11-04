@@ -1,27 +1,21 @@
-import { useMutation } from "@apollo/react-hooks";
 import { pick } from "lodash";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-native";
 import { useAppContext } from "../../appProvider";
 import withGraphqlErrorHandler from "../../utils/withGraphqlErrorHandler";
-import { LOGIN_BY_CREDENTIAL_MUTATION } from "./queries";
 
-export default function useLogIn({ setToken }) {
+export default function useLogIn() {
   const {
     actions: { login },
   } = useAppContext();
-  // const [logInByCredentialMutation] = useMutation(
-  //   LOGIN_BY_CREDENTIAL_MUTATION,
-  //   { client: apolloClient }
-  // );
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const methods = useForm({
     defaultValues: {
-      username: null,
-      password: null,
+      username: "",
+      password: "",
     },
   });
   const { control, handleSubmit } = methods;
@@ -36,15 +30,6 @@ export default function useLogIn({ setToken }) {
 
         await login(payload);
 
-        // const response = await logInByCredentialMutation({
-        //   variables: { credentials: payload },
-        // });
-
-        // const token = response.data.logInByCredential.token;
-
-        // setToken(token);
-
-        // await setToken(token);
         setIsLoading(false);
       },
       () => {

@@ -3,7 +3,9 @@ import { StyleSheet, Text, Image, View, Dimensions } from "react-native";
 import { useAppContext } from "../appProvider";
 
 const HeaderPage = ({ title }) => {
-  const [{ user }] = useAppContext();
+  const {
+    state: { user },
+  } = useAppContext();
 
   return (
     <View style={styles.container}>

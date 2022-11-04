@@ -6,10 +6,8 @@ import { getInputValidates } from "./getInputValidates";
 import { RHFInput } from "../../components/RHFTextInput";
 import Spinner from "react-native-loading-spinner-overlay/lib";
 import Constants from "expo-constants";
-export default function SignIn({ setToken }) {
-  const { control, onSubmit, methods, goToLogin, isLoading } = useSignIn({
-    setToken,
-  });
+export default function SignIn() {
+  const { control, onSubmit, methods, goToLogin, isLoading } = useSignIn();
   return (
     <View style={styles.container}>
       <Spinner visible={isLoading} />

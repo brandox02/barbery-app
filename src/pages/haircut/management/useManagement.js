@@ -21,7 +21,9 @@ export default function useManagement() {
       price: null,
     },
   });
-  const [{ apolloClient }] = useAppContext();
+  const {
+    state: { apolloClient },
+  } = useAppContext();
   const [saveMutation, { loading: loadingMutation }] = useMutation(
     SAVE_MUTATION,
     {

@@ -24,7 +24,9 @@ export default function WorkSchedule() {
     toggleModal,
     visible,
   } = useWorkSchedule();
-  const [{ user }] = useAppContext();
+  const {
+    state: { user },
+  } = useAppContext();
   return (
     <View>
       <HeaderPage title={"Horarios"} />

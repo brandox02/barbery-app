@@ -1,7 +1,7 @@
 import ScheduleList from "./list";
 import ScheduleManagement from "./management";
 
-export default [
+export const scheduleRoutes = [
   {
     path: "/schedules",
     exact: true,

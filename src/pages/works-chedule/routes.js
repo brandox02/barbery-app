@@ -1,6 +1,6 @@
 import WorkSchedule from ".";
 
-export default [
+export const workScheduleRoutes = [
   {
     path: "/work-schedules",
     exact: true,

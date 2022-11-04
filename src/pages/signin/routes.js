@@ -1,12 +1,10 @@
 import SignIn from ".";
 
-const signInRoutes = ({ setToken }) => [
+export const signInRoutes = [
   {
     path: "/signIn",
     exact: true,
-    element: <SignIn setToken={setToken} />,
+    element: <SignIn />,
     noLayout: true,
   },
 ];
-
-export default signInRoutes;

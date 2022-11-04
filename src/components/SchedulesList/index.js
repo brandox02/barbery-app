@@ -4,7 +4,6 @@ import { ScrollView, Text, View } from "react-native";
 import { useAppContext } from "../../appProvider";
 import { usePopulate } from "../../hooks/usePopulate";
 import Card from "./Card";
-import { Conditional } from "../ConditionalComponents/";
 import { getHeightByPercent } from "../../utils/getHeightByPercent";
 import Spinner from "../../components/Spinner";
 
@@ -39,7 +38,9 @@ export default function SchedulesList({
     },
     variables: { where },
   });
-  const [{ user }] = useAppContext();
+  const {
+    state: { user },
+  } = useAppContext();
 
   if (loading) {
     return (

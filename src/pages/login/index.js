@@ -6,8 +6,8 @@ import { RHFInput } from "../../components/RHFTextInput";
 import useLogIn from "./useLogIn";
 import Constants from "expo-constants";
 
-export default function LogIn({ setToken }) {
-  const { control, onSubmit, goToSignIn, isLoading } = useLogIn({ setToken });
+export default function LogIn() {
+  const { control, onSubmit, goToSignIn, isLoading } = useLogIn();
   return (
     <View style={styles.container}>
       <Spinner visible={isLoading} />

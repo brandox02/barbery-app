@@ -3,8 +3,8 @@ import { Button, Text, View } from "react-native";
 import HeaderPage from "../../components/HeaderPage";
 import useSetting from "./useSetting";
 
-export default function Settings({ setToken }) {
-  const { logout, goToUpdateProfilePage } = useSetting({ setToken });
+export default function Settings() {
+  const { logout, goToUpdateProfilePage } = useSetting();
   const items = [
     {
       id: 1,

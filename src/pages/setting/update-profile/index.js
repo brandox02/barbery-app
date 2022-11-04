@@ -6,8 +6,8 @@ import HeaderModal from "../../../components/HeaderModal";
 import ImagePicker from "../../../components/ImagePicker";
 import useUpdateProfile from "./useUpdateProfile";
 
-export default function UpdateProfile({ setToken }) {
-  const { methods, onUpdateProfile, loading } = useUpdateProfile({ setToken });
+export default function UpdateProfile() {
+  const { methods, onUpdateProfile, loading } = useUpdateProfile();
   return (
     <View>
       <HeaderModal

@@ -1,19 +1,9 @@
-import { gql } from "graphql-tag";
 import { pick } from "lodash";
 import { useForm } from "react-hook-form";
 import withGraphqlErrorHandler from "../../utils/withGraphqlErrorHandler";
 import { useNavigate } from "react-router-native";
-import { useMutation } from "@apollo/react-hooks";
 import { useState } from "react";
 import { useAppContext } from "../../appProvider";
-
-const SIGN_IN_MUTATION = gql`
-  mutation SignIn($user: SignInInput!) {
-    signIn(user: $user) {
-      token
-    }
-  }
-`;
 
 const defaultValues = {
   email: null,
@@ -24,12 +14,11 @@ const defaultValues = {
   password2: null,
 };
 
-export default function useSignIn({ setToken }) {
-  const [{ apolloClient }] = useAppContext();
-  const [signInMutation] = useMutation(SIGN_IN_MUTATION, {
-    client: apolloClient,
-  });
+export default function useSignIn() {
   const [isLoading, setIsLoading] = useState(false);
+  const {
+    actions: { sigin },
+  } = useAppContext();
 
   const navigate = useNavigate();
 
@@ -57,10 +46,8 @@ export default function useSignIn({ setToken }) {
         payload.username = payload.username.trim();
         payload.phoneNumber = payload.phoneNumber.trim();
 
-        const response = await signInMutation({ variables: { user: payload } });
-        const token = response.data.signIn.token;
+        await sigin(payload);
 
-        await setToken(token);
         setIsLoading(false);
       },
       () => setIsLoading(false)
