@@ -1,12 +1,11 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { useMutation } from "@apollo/react-hooks";
 import React from "react";
 import { IS_PRODUCTION } from "@env";
 import * as SecureStore from "expo-secure-store";
 import { Alert } from "react-native";
 import makeApolloClient from "./apollo";
 import gql from "graphql-tag";
-import { useLazyQuery, useQuery } from "react-apollo";
+import { useMutation, useQuery } from "react-apollo";
 import { useNavigate } from "react-router-native";
 
 export const HOME_ROUTE = "/haircuts";
@@ -114,10 +113,13 @@ export const AppProvider = ({ children }) => {
   }, [state.apolloClient]);
 
   const login = async ({ username, password }) => {
+    console.log({ username, password });
     try {
       const response = await loginMutation({
         variables: { username, password },
       });
+
+      console.log({ response });
 
       const { accessToken } = response.data.login;
       if (accessToken) {

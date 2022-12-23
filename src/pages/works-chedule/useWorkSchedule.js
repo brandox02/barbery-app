@@ -1,7 +1,7 @@
 import { useMutation } from "@apollo/react-hooks";
 
 import dayjs from "dayjs";
-import { pick } from "lodash";
+import { omit, pick } from "lodash";
 import { useReducer } from "react";
 
 import { Alert } from "react-native";
@@ -61,7 +61,7 @@ export default function useWorkSchedule() {
         value: {
           start: dayjs(dateStartInput).format("HH:mm:ss"),
           end: dayjs(dateEndInput).format("HH:mm:ss"),
-          id: generateRandomId(),
+          id: `${generateRandomId()}+RANDOM`,
         },
         dayId,
       },
@@ -86,11 +86,16 @@ export default function useWorkSchedule() {
     const payload = {
       workScheduleDays: items.map((item) => ({
         id: item.id,
-        workIntervals: item.workIntervals.map((x) =>
+        workIntervals: item.workIntervals
+        .map((x) =>
           pick(x, ["start", "end", "id"])
-        ),
+        )
+        // removing the id of created items 
+        .map(x => typeof x.id === 'string' && x.id.includes('+RANDOM') ? omit(x, 'id') : x),
       })),
     };
+
+    console.log({payload})
 
     await saveWorkScheduleDaysMutation({
       variables: payload,

@@ -1,5 +1,12 @@
 import React from "react";
-import { StyleSheet, Text, Image, View, Dimensions } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  Image,
+  View,
+  Dimensions,
+  ScrollView,
+} from "react-native";
 import { useAppContext } from "../appProvider";
 
 const HeaderPage = ({ title }) => {
@@ -8,35 +15,37 @@ const HeaderPage = ({ title }) => {
   } = useAppContext();
 
   return (
-    <View style={styles.container}>
-      <View style={styles.left}>
-        <View>
-          <Text
-            style={{
-              fontWeight: "bold",
-              fontSize: 30,
-              marginBottom: 10,
-              top: 0,
-            }}
-          >
-            {title}
-          </Text>
-          <Text
-            style={{ fontSize: 16 }}
-          >{`${user?.firstname} ${user?.lastname}`}</Text>
+    <ScrollView stickyHeaderIndices={[1]}>
+      <View style={styles.container}>
+        <View style={styles.left}>
+          <View>
+            <Text
+              style={{
+                fontWeight: "bold",
+                fontSize: 30,
+                marginBottom: 10,
+                top: 0,
+              }}
+            >
+              {title}
+            </Text>
+            <Text
+              style={{ fontSize: 16 }}
+            >{`${user?.firstname} ${user?.lastname}`}</Text>
+          </View>
+        </View>
+        <View style={styles.right}>
+          <Image
+            style={styles.profileImage}
+            source={
+              user?.imageUrl
+                ? { uri: user.imageUrl }
+                : require("../../assets/non-profile-image.png")
+            }
+          />
         </View>
       </View>
-      <View style={styles.right}>
-        <Image
-          style={styles.profileImage}
-          source={
-            user?.imageUrl
-              ? { uri: user.imageUrl }
-              : require("../../assets/non-profile-image.png")
-          }
-        />
-      </View>
-    </View>
+    </ScrollView>
   );
 };
 
