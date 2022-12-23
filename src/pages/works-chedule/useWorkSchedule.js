@@ -90,12 +90,10 @@ export default function useWorkSchedule() {
         .map((x) =>
           pick(x, ["start", "end", "id"])
         )
-        // removing the id of created items 
+        // removing the id of created items
         .map(x => typeof x.id === 'string' && x.id.includes('+RANDOM') ? omit(x, 'id') : x),
       })),
     };
-
-    console.log({payload})
 
     await saveWorkScheduleDaysMutation({
       variables: payload,
