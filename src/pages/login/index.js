@@ -53,7 +53,7 @@ export default function LogIn() {
         />
         <Button title={"Iniciar Sesión"} onPress={onSubmit} />
       </View>
-      <View
+      {/* <View
         style={{ position: "absolute", top: 5 + Constants.statusBarHeight }}
       >
         <Text
@@ -67,7 +67,7 @@ export default function LogIn() {
         >
           Powered By Brandox02
         </Text>
-      </View>
+      </View> */}
       <StatusBar style="auto" />
     </View>
   );

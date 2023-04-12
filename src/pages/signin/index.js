@@ -94,7 +94,7 @@ export default function SignIn() {
         />
         <Button title={"Registrarme"} onPress={onSubmit} />
       </View>
-      <View
+      {/* <View
         style={{ position: "absolute", top: 5 + Constants.statusBarHeight }}
       >
         <Text
@@ -108,7 +108,7 @@ export default function SignIn() {
         >
           Powered By Brandox02
         </Text>
-      </View>
+      </View> */}
       <StatusBar style="auto" />
     </View>
   );
