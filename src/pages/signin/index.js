@@ -72,7 +72,9 @@ export default function SignIn() {
             name={"password"}
             style={styles.textInput}
             placeholder={"Ingresa la contraseña"}
+
             validate={getInputValidates(methods)("password")}
+            secureTextEntry={true}
           />
         </View>
         <View style={styles.linealForm}>
@@ -82,7 +84,9 @@ export default function SignIn() {
             name={"password2"}
             style={styles.textInput}
             placeholder={"Ingresa la contraseña 2"}
+
             validate={getInputValidates(methods)("password2")}
+            secureTextEntry={true}
           />
         </View>
       </View>

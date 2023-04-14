@@ -21,11 +21,11 @@ export const RHFInput = ({
     rules: {
       ...(required
         ? {
-            required: {
-              value: true,
-              message: "Este campo es requerido",
-            },
-          }
+          required: {
+            value: true,
+            message: "Este campo es requerido",
+          },
+        }
         : {}),
       validate,
     },

@@ -42,6 +42,7 @@ export default function LogIn() {
             name={"password"}
             style={styles.textInput}
             placeholder={"Ingresa la contraseña"}
+            secureTextEntry={true}
           />
         </View>
       </View>
